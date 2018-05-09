@@ -6,7 +6,7 @@ const  (
 
 	 PAGESIZE3 = 3
 
-	 ERRROWS = "Not found row"
+	 ERRROWS = "<QuerySeter> no row found"
 
 )
 
