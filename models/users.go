@@ -6,11 +6,11 @@ import (
 
 type User struct {
 	Id           int
-	Name         string //名字
-	Account      string //账号
-	Pwd          string //密码
-	UserImg      string //头像
-	RegisterDate string //注册日期
+	Name         string `description:"名字"`
+	Account      string `description:"账号"`
+	Pwd          string `description:"密码"`
+	UserImg      string `description:"头像"`
+	RegisterDate string `description:"注册日期"`
 }
 
 func Login(account, pwd string) (user *User, err error) {

@@ -7,17 +7,17 @@ import (
 
 type Dish struct {
 	Id             int
-	Uid            int    //用户id
-	DishName       string //菜名
-	DishImg        string //菜成品图
-	ReleaseDate    string //发布时间
-	MainMaterial   string //主料
-	SecondMaterial string //辅料
-	ReleaseRole    int    //发布角色 0 官方 1用户
-	Tasty          string //口味
-	DishSystem     string //菜系
-	DishDescribe   string //菜谱描述
-	CollectCount   int    //收藏人数
+	Uid            int    `description:"用户id"`
+	DishName       string `description:"菜名"`
+	DishImg        string `description:"菜成品图"`
+	ReleaseDate    string `description:"发布时间"`
+	MainMaterial   string `description:"主料"`
+	SecondMaterial string `description:"辅料"`
+	ReleaseRole    int    `description:"发布角色 0 官方 1用户"`
+	Tasty          string `description:"口味"`
+	DishSystem     string `description:"菜系"`
+	DishDescribe   string `description:"菜谱描述"`
+	CollectCount   int    `description:"收藏人数"`
 	PopularCount   int    `description:"人气"`
 }
 
