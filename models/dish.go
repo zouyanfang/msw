@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+//菜谱
 type Dish struct {
 	Id             int
 	Uid            int    `description:"用户id"`
