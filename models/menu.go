@@ -1,6 +1,8 @@
 package models
 
-import "zcm_tools/orm"
+import (
+	"github.com/astaxie/beego/orm"
+)
 
 type Menu struct {
 	Id           int
@@ -19,7 +21,7 @@ func GetMenuList(startIndex,pageSize int,condition string,paras []interface{}) (
 	if condition != "" {
 		sql += condition
 	}
-	sql += "LIMIT ?,?"
+	sql += " LIMIT ?,?"
 	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&menuList)
 	return
 }

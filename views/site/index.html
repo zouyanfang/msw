@@ -51,7 +51,7 @@
         }
         #menu{
             position: relative;
-            bottom: 70px;
+            /*bottom: 70px;*/
             z-index: 3;
             padding: 0px;
         }
@@ -170,10 +170,12 @@
 </div>
 
 <div class="container" id="menu">
-    <div class="col-sm-3 img"><img src="static/img/2.jpg" value=""><p class="text-center col-sm-12">menu-name</p></div>
+    {{range $k,$v := .menu}}
+    <div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div>
+    <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
     <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
-    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
-    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>-->
+    {{end}}
 </div>
 
 <div class="container menudetail">
@@ -181,12 +183,14 @@
 </div>
 
 <div class="container" id="food">
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" value="" class="img-responsive"><p class="col-sm-11 text-center">food name</p></div></div>
+    {{range $k,$v := .dishShow}}
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"><p class="col-sm-11 text-center">{{$v.DishName}}</p></div></div>
+    <!--<div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
     <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
     <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
     <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>-->
+    {{end}}
 </div>
 
 <div class="container-fluid menudetail2">
