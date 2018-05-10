@@ -10,8 +10,7 @@ import (
 //得到菜谱列表
 func GetDishList(page ,pageSize int,condition string ,paras []string)(resp models.BaseMsgResp){
 	resp.Ret = 403
-	pageIndex := utils.StartIndex(page,pageSize)
-	dishs,err := models.GetDishList(pageIndex,pageSize,condition,paras)
+	dishs,err := models.GetDishList(utils.StartIndex(page,pageSize),pageSize,condition,paras)
 	if err != nil{
 		if err.Error()!=utils.ERRROWS{
 			resp.Msg = "服务器bug"

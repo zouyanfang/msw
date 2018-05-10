@@ -5,6 +5,7 @@ import "github.com/astaxie/beego"
 const  (
 
 	 PAGESIZE3 = 3
+	PAGESIZE6 =6
 
 	 ERRROWS = "<QuerySeter> no row found"
 

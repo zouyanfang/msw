@@ -2,7 +2,7 @@ package utils
 
 
 func StartIndex(page,pageSize int)(pageIndex int){
-	if page < 1 {
+	if page <= 1 {
 		pageIndex = 0
 		return
 	}
