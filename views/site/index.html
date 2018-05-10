@@ -1,206 +1,283 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
- 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.bundle.js"></script>	
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
 
-	
-	
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<style>
-		.swiper-container {
-			height: 50%;
-			position: relative;
-			z-index: 1
-		}
-		#navs{
-			background-color: rgba(0,0,0,0.6);
-			position: relative;
-			bottom: 100px;
-			z-index: 2
-		}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.bundle.js"></script>
 
-		#mynav{
-			background-color: rgba(0,0,0,0.6);
-		}
-		
-		.logo{
-			z-index:10;
-			position: absolute;
-			top: 0px;
-			background-color: rgba(0,0,0,0.8);
-			color: white;
-			left: 30px;
-		}
 
-		.user{
-			z-index:10;
-			position: absolute;
-			top: 0px;
-			background-color: rgba(0,0,0,0.8);
-			color: white;
-			right: 30px;			
-			
-		}
+    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .swiper-container {
+            height: 50%;
+            position: relative;
+            z-index: 1
+        }
+        #navs{
+            background-color: rgba(0,0,0,0.6);
+            position: relative;
+            bottom: 100px;
+            z-index: 2
+        }
 
-		#menu{
-			position: relative;
-			bottom: 70px;
-			z-index: 3;
-			padding: 0px;
+        #mynav{
+            background-color: rgba(0,0,0,0.6);
+        }
 
-		}
+        .logo{
+            z-index:10;
+            position: absolute;
+            top: 0px;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            left: 30px;
+        }
+        .user{
+            z-index:10;
+            position: absolute;
+            top: 0px;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            right: 30px;
+        }
+        #menu{
+            position: relative;
+            bottom: 70px;
+            z-index: 3;
+            padding: 0px;
+        }
 
-		#menu div{
-			padding: 0px;
-		}
+        #menu div{
+            padding: 0px;
+        }
 
-		.menudetail{
-			position: relative;
-			bottom: 50px;
-			border:3px solid #462F29;
-		}
+        .menudetail{
+            position: relative;
+            bottom: 50px;
+            border:3px solid #462F29;
+        }
 
-		.menudetail2{
-			border:10px solid #FAC170;
-		}
-		.notice{
-			background:url(static/img/bg.png) no-repeat 120% -250px #f4ebdb;
+        .menudetail2{
+            border:10px solid #FAC170;
+        }
+        .notice{
+            background:url(static/img/bg.png) no-repeat 120% -250px #f4ebdb;
 
-		}
-		#news li{
-			border-bottom: 1px solid gray
-		}
+        }
+        #news li{
+            border-bottom: 1px solid gray
+        }
 
-		#news p{
-			margin-top: 20px;
-		}
-	</style>
+        #news p{
+            margin-top: 20px;
+        }
+
+
+        #menu div:hover{
+            cursor: pointer
+        }
+        .img {
+            position: relative;
+        }
+        #menu p{
+            position: absolute;
+            bottom: 0px;
+            /*background-color: rgba(0,0,0,0.5);*/
+            /*width: 80%;*/
+            /*margin: 0 auto;*/
+        }
+        #food div {
+            overflow: hidden;
+        }
+
+        #food img {
+            transition: All 0.4s ease-in-out;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+        }
+
+        #food img:hover {
+            cursor: pointer;
+            transform: scale(1.5);
+            -webkit-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+        }
+        #food {
+            position: relative;
+        }
+        #food p {
+            position: absolute;
+            top: 0px;
+            font-size: 20px;
+            color: #462f2a;
+        }
+    </style>
 </head>
 <body style="height: 100%;">
-	<!-- Swiper -->
-  	
-  <div class="swiper-container" >
+<!-- Swiper -->
+
+<div class="swiper-container" >
     <div class="swiper-wrapper" >
 	{{range $i,$d := .dish}}
-      <div class="swiper-slide"><a href=""><img src="{{$d.DishImg}}"  height="500px;" width="100%"></a></div>
+        <div class="swiper-slide"><a href=""><img src="{{$d.DishImg}}"  height="500px;" width="100%"></a></div>
 	{{end}}
-      <div class="swiper-slide"><a href=""><img src="static/img/1.jpg"  height="500px;" width="100%"></a></div>
+        <div class="swiper-slide"><a href=""><img src="static/img/1.jpg"  height="500px;" width="100%"></a></div>
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
     <!-- Add Arrows -->
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
-  </div>
+</div>
 
-	<div class="container-fluid" id="navs">
-		<div class="container" >
-			<ul class="nav nav-tabs nav-justified" style="width: 50%;margin: 0 auto" id="mynav">
-				
-  				<li role="" class="active"><a href="#">首页</a></li>
-  				<li role=""><a href="#">菜谱大全</a></li>
-  				<li role=""><a href="#">菜单中心</a></li>
-  				<li role=""><a href="#">留言版</a></li>
-  				<li role=""><a href="#">后台管理</a></li>
-  				
-			</ul>
-		</div>
-	</div>
+<div class="container-fluid" id="navs">
+    <div class="container" >
+        <ul class="nav nav-tabs nav-justified" style="width: 50%;margin: 0 auto" id="mynav">
 
-    <!-- Initialize Swiper -->
-	
-    <div class="logo col-sm-2" style="">
-		<h3 class="text-center"><strong><i>Delicious</i></strong></h3>
+            <li role="" class="active"><a href="#">首页</a></li>
+            <li role=""><a href="#">菜谱大全</a></li>
+            <li role=""><a href="#">菜单中心</a></li>
+            <li role=""><a href="#">留言版</a></li>
+            <li role=""><a href="#">后台管理</a></li>
+
+        </ul>
+    </div>
+</div>
+
+<!-- Initialize Swiper -->
+
+<div class="logo col-sm-2" style="">
+    <h3 class="text-center"><strong><i>Delicious</i></strong></h3>
+</div>
+
+<div class="user col-sm-2" >
+    <ul class="list-inline" style="margin-top: 20px;">
+        <li><a href="/login" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-user" style="color:#c8161d"></span>会员登录</p></a></li>
+        <li><a href="/toregister" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-plus" style="color:#c8161d"></span>注册</p></a></li>
+    </ul>
+</div>
+
+<div class="container" id="menu">
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" value=""><p class="text-center col-sm-12">menu-name</p></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+</div>
+
+<div class="container menudetail">
+    <p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
+</div>
+
+<div class="container" id="food">
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" value="" class="img-responsive"><p class="col-sm-11 text-center">food name</p></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
+</div>
+
+<div class="container-fluid menudetail2">
+</div>
+
+<div class="container-fluid notice">
+    <h3 class="text-center" style="color: #4d6d2d;padding-top: 30px; ">
+        <p><i>News</i></p>
+        <p>最新消息</p>
+    </h3>
+    <div style="width: 50%;margin: 70px auto;">
+        <ul class="list-unstyled" id="news">
+            <li>
+                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦....</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+            </li>
+            <li>
+                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+            </li>
+            <li>
+                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color:#59793a ">
+    <div class="jumbotron" style="background-color:#59793a;color: white; ">
+        <p class="text-center" >本站所有信息均由互联网下载得来，相关链接已注明来源，版权归原创者所有。</p>
+        <p class="text-center">如果无意中侵犯了您的权益，请通知我（....@163.com)，我们会及时做相应处理，谢谢合作。</p>
     </div>
 
-    <div class="user col-sm-2" >
-		<ul class="list-inline" style="margin-top: 20px;">
-			<li><a href="/login" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-user" style="color:#c8161d"></span>会员登录</p></a></li>
-			<li><a href="/toregister" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-plus" style="color:#c8161d"></span>注册</p></a></li>
-		</ul>
-    </div>
-	
-	<div class="container" id="menu">
-		<div class="col-sm-3"><img src="static/img/2.jpg" ></div>
-		<div class="col-sm-3"><img src="static/img/2.jpg" ></div>
-		<div class="col-sm-3"><img src="static/img/2.jpg" ></div>
-		<div class="col-sm-3"><img src="static/img/2.jpg" ></div>
-	</div>
+</div>
+<div class="container-fluid" style="background-color: #4b6e2d">
+    <p class="text-center lead" style="color: white;">Copyright &copy;ZYF ALL Rights Reserved</p>
+</div>
 
-	<div class="container menudetail">
-		<p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
-	</div>
-
-	<div class="container" id="food">
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-		<div class="col-sm-4"><img src="static/img/3.jpg" style="width: 95%;margin-bottom: 20px;"></div>
-	</div>
-
-	<div class="container-fluid menudetail2">
-	</div>
-
-	<div class="container-fluid notice">
-		<h3 class="text-center" style="color: #4d6d2d;padding-top: 30px; ">
-				<p><i>News</i></p>
-				<p>最新消息</p>
-		</h3>
-		<div style="width: 50%;margin: 70px auto;">
-		<ul class="list-unstyled" id="news">
-			<li>
-				<p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦....</p>
-				<p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-			</li>
-			<li>
-				<p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
-				<p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-			</li>
-			<li>
-				<p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
-				<p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-			</li>
-		</ul>
-		</div>
-	</div>
-
-	<div class="container-fluid" style="background-color:#59793a ">
-		<div class="jumbotron" style="background-color:#59793a;color: white; ">
-			<p class="text-center" >本站所有信息均由互联网下载得来，相关链接已注明来源，版权归原创者所有。</p>
-			<p class="text-center">如果无意中侵犯了您的权益，请通知我（....@163.com)，我们会及时做相应处理，谢谢合作。</p>
-		</div>
-		
-	</div>
-	<div class="container-fluid" style="background-color: #4b6e2d">
-			<p class="text-center lead" style="color: white;">Copyright &copy;ZYF ALL Rights Reserved</p>
-	</div>
-
-  <script>
+<script>
     var swiper = new Swiper('.swiper-container', {
-      spaceBetween: 30,
-      centeredSlides: true,
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
     });
-  </script>
+</script>
+
+<script type="text/javascript">
+    // 图片翻转的js不用css3
+    // var n = 0
+    var id = 0
+    var src = ""
+    $(".img").mouseover(function(){
+        var n = 0
+        console.log(n)
+        rotateY($(this),n)
+    })
+
+    $(".img").mouseout(function(){
+        clearInterval(id)
+        $(this).css('transform', 'rotateY(0deg)');
+        // $(this).empty()
+        // $(this).append("<img src='"+src+"'/>")
+    });
+    function rotateY(t,n){
+        id = setInterval(function(){
+            if (n > 360){
+                clearInterval(id)
+                var img = t.find("img")
+                // src = img.attr("src")
+                // console.log(img)
+                // img.remove()
+                // t.append("<p>作者黄希云</p>")
+                // console.log(1)
+                return false
+            }
+            n+=25
+            t.css('transform','rotateY('+n+'deg)')
+        },100)
+    }
+</script>
 </body>
 </html>
