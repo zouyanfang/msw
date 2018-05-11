@@ -24,8 +24,9 @@ func (this *IndexController)Index(){
 	dishShow := services.GetDishList(page,utils.PAGESIZE6,"AND is_slideshow = 2 ORDER BY release_date DESC",nil)
 	this.Data["dishShow"] = dishShow.Object
 	//TODO
-	//首页最新消息展示
-
+	//首页最新留言展示
+	messageShow := services.GetMessageBoardList(page,utils.PAGESIZE3,"ORDER BY mb.create_time DESC",nil)
+	this.Data["message"] = messageShow.Object
 	/*fmt.Print(resp.Object)*/
 	this.TplName = "site/index.html"
 }
