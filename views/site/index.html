@@ -216,18 +216,20 @@
     </h3>
     <div style="width: 50%;margin: 70px auto;">
         <ul class="list-unstyled" id="news">
+            {{range $k,$v := .message}}
             <li>
-                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦....</p>
-                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+                <p class="text-left">{{$v.CreateTime}}<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>{{$v.Content}}</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：{{$v.Name}}</small></p>
             </li>
-            <li>
+             {{end}}
+            <!--<li>
                 <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
                 <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
             </li>
             <li>
                 <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
                 <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-            </li>
+            </li>-->
         </ul>
     </div>
 </div>

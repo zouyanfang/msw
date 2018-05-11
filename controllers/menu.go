@@ -1,3 +1,7 @@
 package controllers
 
-//菜单
+//TODO
+//菜单中心
+type MenuCenterController struct {
+	BaseController
+}

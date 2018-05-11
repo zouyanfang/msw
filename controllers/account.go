@@ -32,7 +32,7 @@ func (c *AccountController) VerifyPassword()  {
 		return
 	}else {
 		//保存用户cookie
-		c.Ctx.SetCookie("uid",user.Name)
+		c.Ctx.SetCookie("uid",user.Account)
 		c.Ctx.SetCookie("pid",user.Pwd)
 		resultMap["ret"] = 200
 		resultMap["msg"] = "登录成功"
