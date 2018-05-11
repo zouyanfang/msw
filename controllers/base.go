@@ -7,7 +7,9 @@ type BaseController struct {
 } 
 
 func (this *BaseController)Prepare(){
-	this.Ctx.GetCookie("")
+/*	name := this.Ctx.GetCookie("username")
+	pwd := this.Ctx.GetCookie("password")*/
+
 }
 
 func (this *BaseController)IsNeddTemplate(){
