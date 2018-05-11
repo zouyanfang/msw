@@ -5,18 +5,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.bundle.js"></script> -->
 
-
+    <link href="../static/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="../static/css/font-awesome.css" rel="stylesheet">
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    {{/*<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">*/}}
     <style>
-        *{
+/*        *{
             box-sizing: border-box;
-        }
+        }*/
         .swiper-container {
             height: 50%;
             position: relative;
@@ -62,7 +64,7 @@
 
         .menudetail{
             position: relative;
-            bottom: 50px;
+            /*bottom: 50px;*/
             border:3px solid #462F29;
         }
 
@@ -89,11 +91,12 @@
             position: relative;
         }
         #menu p{
-            position: absolute;
+            /*position: absolute;*/
             bottom: 0px;
             /*background-color: rgba(0,0,0,0.5);*/
             /*width: 80%;*/
             /*margin: 0 auto;*/
+            text-shadow: 5px 5px 2px #2196f370;
         }
         #food div {
             overflow: hidden;
@@ -119,57 +122,68 @@
         }
         #food p {
             position: absolute;
-            top: 0px;
+            top: 20px;
             font-size: 20px;
-            color: #462f2a;
+            color: #f7e9e6;
+            transform: rotate(-27deg);
+            background-color: #03a9f4ba;
+            right: 110px;
+
         }
+
+
     </style>
 </head>
 <body style="height: 100%;">
-<!-- Swiper -->
-
-<div class="swiper-container" >
-    <div class="swiper-wrapper" >
-	{{range $i,$d := .dish}}
-        <div class="swiper-slide"><a href=""><img src="{{$d.DishImg}}"  height="500px;" width="100%"></a></div>
-	{{end}}
-        <div class="swiper-slide"><a href=""><img src="static/img/1.jpg"  height="500px;" width="100%"></a></div>
+    <div class="banner about-w3bnr">
+        <!-- header -->
+        <div class="header">
+            <div class="w3ls-header">
+                <div class="container">
+                    <div class="w3ls-header-right">
+                        <ul>
+                            <li class="head-dpdn">
+                                <a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a>
+                            </li>
+                            <li class="head-dpdn">
+                                <a href="/toregister"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- //header-one -->
+            <!-- navigation -->
+            <div class="navigation agiletop-nav">
+                <div class="container">
+                    <nav class="navbar navbar-default">
+                        <div class="navbar-header w3l_logo">
+                            <h1><a href="index.html">Memory taste<span>delicious memory happiness</span></a></h1>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="" class="active">首页</a></li>
+                                <li><a href="" >菜谱大全</a></li>
+                                <li><a href="">菜单中心</a></li>
+                                <li><a href="">留言版</a></li>
+                                <!-- 管理中心 当用户是管理人的时候进来显示-->
+                                <!-- <li><a href="contact.html">后台管理</a></li> -->
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="banner-text">
+            <div class="container">
+                <h2>Delicious food from the <br> <span>Best Chefs For you.</span></h2>
+            </div>
+        </div>
     </div>
-    <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
-    <!-- Add Arrows -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</div>
-
-<div class="container-fluid" id="navs">
-    <div class="container" >
-        <ul class="nav nav-tabs nav-justified" style="width: 50%;margin: 0 auto" id="mynav">
-
-            <li role="" class="active"><a href="#">首页</a></li>
-            <li role=""><a href="#">菜谱大全</a></li>
-            <li role=""><a href="#">菜单中心</a></li>
-            <li role=""><a href="#">留言版</a></li>
-            <li role=""><a href="#">后台管理</a></li>
-
-        </ul>
-    </div>
-</div>
 
 <!-- Initialize Swiper -->
 
-<div class="logo col-sm-2" style="">
-    <h3 class="text-center"><strong><i>Delicious</i></strong></h3>
-</div>
-
-<div class="user col-sm-2" >
-    <ul class="list-inline" style="margin-top: 20px;">
-        <li><a href="/login" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-user" style="color:#c8161d"></span>会员登录</p></a></li>
-        <li><a href="/toregister" style="color: white"><p class="text-center"><span class="glyphicon glyphicon-plus" style="color:#c8161d"></span>注册</p></a></li>
-    </ul>
-</div>
-
-<div class="container" id="menu">
+<div class="container" id="menu" style="margin-top: 20px;">
     {{range $k,$v := .menu}}
     <div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div>
     <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
@@ -178,21 +192,20 @@
     {{end}}
 </div>
 
-<div class="container menudetail">
+<div class="container menudetail" style="margin-top: 20px;">
     <p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
 </div>
 
-<div class="container" id="food">
-    {{range $k,$v := .dishShow}}
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"><p class="col-sm-11 text-center">{{$v.DishName}}</p></div></div>
-    <!--<div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>
-    <div class="col-sm-4" style="margin-bottom: 20px;"><div><img src="static/img/3.jpg" style="width: 100%;" class="img-responsive"></div></div>-->
-    {{end}}
+<div class="container" id="food" style="margin-top: 20px;">
+    <!-- {{range $k,$v := .dishShow}} -->
+    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+        <div>
+            <img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"/>
+            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+        </div>
+    </div>
+    <!-- {{end}} -->
 </div>
-
 <div class="container-fluid menudetail2">
 </div>
 
@@ -230,7 +243,7 @@
     <p class="text-center lead" style="color: white;">Copyright &copy;ZYF ALL Rights Reserved</p>
 </div>
 
-<script>
+<!-- <script>
     var swiper = new Swiper('.swiper-container', {
         spaceBetween: 30,
         centeredSlides: true,
@@ -247,7 +260,7 @@
             prevEl: '.swiper-button-prev',
         },
     });
-</script>
+</script> -->
 
 <script type="text/javascript">
     // 图片翻转的js不用css3
