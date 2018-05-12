@@ -2,8 +2,8 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css"> -->
 
 <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
@@ -14,7 +14,10 @@
     <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="all">
     <link href="../static/css/font-awesome.css" rel="stylesheet">
     <script type="text/javascript" src="../static/js/jquery.min.js"></script>
-    {{/*<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">*/}}
+    <link href="http://fonts.googleapis.com/css?family=Yantramanav:100,300,400,500,700,900" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <style>
 /*        *{
             box-sizing: border-box;
@@ -130,8 +133,110 @@
             right: 110px;
 
         }
+    </style>
+    <style type="text/css">
+        .user{
+            position: absolute;
+            top: 0px;
+            right: 10px;
+        }
 
+        #navs{
+            background-color: rgba(0,0,0,0.6);
+        }
+        #navs a {
+            color: white;
+        }
+        #navs a:hover {
+            color: black;
+        }
 
+        .search {
+            /*border: 0px;*/
+            /*border-bottom: 1px solid black;*/
+            border: 1px solid gray;
+            border-radius: 10px;
+            outline: 0px;
+        }
+
+        .menuitems{
+            border:#346D9C solid 2px;
+            border-radius: 10px;
+            color: #346d9c; 
+        }
+
+        ul .menuitems:hover{
+            cursor: pointer;
+        }       
+
+        .myactive{
+            color: white;
+        }
+
+        .green {
+            color:#1B9C62
+        }
+
+        .pink{
+            color:#EF6D89;
+        }
+
+        .green2{
+            color:#7CCE2E;
+        }
+
+        .red {
+            color:#D73E3F;
+        }
+        .blue{
+            color:#00ACEA;
+        }
+        .purple{
+            color:#673ab7;
+        }
+
+        .brown{
+            color:#795548;
+        }
+
+        .orange{
+            color: #ffc107;
+        }
+        .red2 {
+            color:#e91e63;
+        }
+        .blue2{
+            color:#cddc39;
+        }
+
+        .pink2{
+            color:#398bdc;
+        }
+
+        .gray{
+            color:#607d8b;
+        }
+        .gray2{
+            color: #e42020;
+        }
+        .white{
+            color: white;
+        }
+
+        #clear {
+            cursor: pointer;
+        }
+
+        .go{
+            transform:rotate(720deg) ;
+            transition: 3s;
+            animation: change 3s;
+        }
+
+       @keyframes change{
+            from {width: 0px;height: 0px;opacity: 0;}
+            to {width: 550px;height: 300px;opacity: 1;}
+        }
     </style>
 </head>
 <body style="height: 100%;">
@@ -162,10 +267,26 @@
                         </div>
                         <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="" class="active">首页</a></li>
-                                <li><a href="" >菜谱大全</a></li>
-                                <li><a href="">菜单中心</a></li>
-                                <li><a href="">留言版</a></li>
+                                {{if eq .type 1}}
+                                <li><a href="/" class="active">首页</a></li>
+                                {{else }}
+                                <li><a href="/" class="">首页</a></li>
+                                {{end}}
+                                {{ if eq .type 2}}
+                                <li><a href="/index/dishcenter" class="active">菜谱大全</a></li>
+                                {{else}}
+                                <li><a href="/index/dishcenter" >菜谱大全</a></li>
+                                {{end}}
+                                {{if eq .type 3}}
+                                <li><a href="/index/menucenter" class="active">菜单中心</a></li>
+                                {{else}}
+                                <li><a href="/index/menucenter">菜单中心</a></li>
+                                {{end}}
+                                {{if eq .type 4}}
+                                <li><a href="/index/message" class="active">留言版</a></li>
+                                {{else}}
+                                <li><a href="/index/message">留言版</a></li>
+                                {{end}}
                                 <!-- 管理中心 当用户是管理人的时候进来显示-->
                                 <!-- <li><a href="contact.html">后台管理</a></li> -->
                             </ul>
@@ -177,61 +298,21 @@
         <div class="banner-text">
             <div class="container">
                 <h2>Delicious food from the <br> <span>Best Chefs For you.</span></h2>
+                <div class="agileits_search">
+                    <form action="/index/search" method="get" style="border: 0px;">
+                        <input name="Search" type="text" placeholder="Enter Your Area Name" required="">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
 <!-- Initialize Swiper -->
-
-<div class="container" id="menu" style="margin-top: 20px;">
-    {{range $k,$v := .menu}}
-    <div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div>
-    <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
-    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
-    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>-->
-    {{end}}
-</div>
-
-<div class="container menudetail" style="margin-top: 20px;">
-    <p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
-</div>
-
-<div class="container" id="food" style="margin-top: 20px;">
-    <!-- {{range $k,$v := .dishShow}} -->
-    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-        <div>
-            <img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"/>
-            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
-        </div>
-    </div>
-    <!-- {{end}} -->
-</div>
-<div class="container-fluid menudetail2">
-</div>
-
-<div class="container-fluid notice">
-    <h3 class="text-center" style="color: #4d6d2d;padding-top: 30px; ">
-        <p><i>News</i></p>
-        <p>最新消息</p>
-    </h3>
-    <div style="width: 50%;margin: 70px auto;">
-        <ul class="list-unstyled" id="news">
-            {{range $k,$v := .message}}
-            <li>
-                <p class="text-left">{{$v.CreateTime}}<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>{{$v.Content}}</p>
-                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：{{$v.Name}}</small></p>
-            </li>
-             {{end}}
-            <!--<li>
-                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
-                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-            </li>
-            <li>
-                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
-                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
-            </li>-->
-        </ul>
-    </div>
+<div class="main">
+    <!-- main -->
+        {{.LayoutContent}}
+    <!-- main end -->
 </div>
 
 <div class="container-fluid" style="background-color:#59793a ">
