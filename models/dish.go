@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"fmt"
 )
 
 //菜谱
@@ -22,7 +23,7 @@ type Dish struct {
 	PopularCount   int    `description:"人气"`
 }
 
-//获取菜谱列表
+//首页/获取菜谱列表
 func GetDishList(pageIndex, pageSize int, condition string, paras []string) (d []Dish, err error) {
 	sql := `SELECT * FROM dish WHERE 1=1 `
 	if condition != "" {
@@ -33,10 +34,22 @@ func GetDishList(pageIndex, pageSize int, condition string, paras []string) (d [
 	return
 }
 
+//获取菜谱总数
+func GetDishCount( condition string, paras []interface{}) (count int, err error) {
+	sql := `SELECT COUNT(1) FROM dish WHERE 1=1 `
+	if condition != "" {
+		sql += condition
+	}
+	_, err = orm.NewOrm().Raw(sql, paras).QueryRows(&count)
+	return
+}
+
+//菜谱详情
 type DishInfo struct {
 	Uid            int
 	UserImg        string `description:"用户头像"`
 	Name           string `description:"用户昵称"`
+	DishName       string `description:"菜名"`
 	DishImg        string `description:"菜谱成品图"`
 	MainMaterial   string `description:"主料"`
 	SecondMaterial string `description:"辅料"`
@@ -48,6 +61,22 @@ type DishInfo struct {
 	StepDescribe   string `description:"步骤描述"`
 }
 
+//菜谱大全/获取菜谱列表展示
+func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}) (list []DishInfo,err error) {
+	sql := `SELECT d.dish_name,d.dish_img,u.user_img,u.name
+			FROM dish d
+			LEFT JOIN users u ON u.id = d.uid
+			WHERE 1 = 1 `
+	if condition != "" {
+		sql += condition
+	}
+	sql += " LIMIT ?,?"
+	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&list)
+	fmt.Print("sssss",sql,list,err)
+	return
+}
+
+//菜谱大全/获取菜谱详情
 func GetDishInfo(uid,dishId int)(dishInfo []DishInfo,err error)  {
 	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
 			d.tasty,d.dish_system,ds.dish_id,ds.step,ds.step_img,ds.step_describe
@@ -58,3 +87,4 @@ func GetDishInfo(uid,dishId int)(dishInfo []DishInfo,err error)  {
 	_,err = orm.NewOrm().Raw(sql,uid,dishId).QueryRows(&dishInfo)
 	return
 }
+

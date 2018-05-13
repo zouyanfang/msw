@@ -33,12 +33,15 @@ func (this *IndexController)Index(){
 	this.TplName = "site/index1.html"
 }
 
-//菜谱中心
+/*//菜谱中心
 func (this *IndexController)DishCenter (){
+	page := 1
+	allDish := services.GetAllDishList(page,utils.PAFESIZE9,"ORDER BY d.popular_count DESC",nil)
+	this.Data["allDish"] = allDish.Object
 	this.Data["type"] = 2
 	this.IsNeddTemplate()
 	this.TplName = "site/food.html"
-}
+}*/
 
 //菜单中心
 func (this *IndexController)MenuCenter(){
