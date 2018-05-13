@@ -1,0 +1,37 @@
+<div class="col-sm-12 p0">
+    <ul class="nav nav-tabs" id="mynav">
+        <li role="presentation" class="active" value="1"><a href="#">我的菜单</a></li>
+        <li role="presentation" value="2"><a href="#">发布菜单</a></li>
+        <li role="presentation" value="3"><a href="#">收藏菜单</a></li>
+    </ul>
+    <div class="main">
+        <div class="col-sm-12" style="margin-top: 20px;" id="mydish" >
+            <p>我的菜单</p>
+        </div>
+        <div class="col-sm-12 hidden" style="margin-top: 20px;" id="releasedish">
+            <p>发布菜单</p>
+        </div>
+        <div class="col-sm-12 hidden" style="margin-top: 20px;" id="collectdish">
+            <p>收藏菜单</p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#mynav li").click(function () {
+        var s = $(this).attr("value")
+        $(".main div").addClass("hidden")
+        if ( s == 1 ){
+            $("#mydish").removeClass("hidden")
+        }else if(s  == 2){
+            $("#releasedish").removeClass("hidden")
+        }else if(s == 3){
+            $("#collectdish").removeClass("hidden")
+        }
+    })
+
+    $("#mynav li").click(function () {
+        console.log("12312312321313")
+        $("#mynav li").removeClass("active")
+        $(this).addClass("active")
+    })
+</script>

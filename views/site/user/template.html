@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <style type="text/css">
+        .topbc{
+            background-color: #333
+        }
+        .topbc a {
+            color: #ccc;
+        }
+        .topbc a:hover{
+            color: black;
+        }
+        .topbc a:hover{
+            text-decoration: none;
+            color: #777;
+        }
+        .img{
+            border-radius: 30px;
+        }
+        .imgcontainer{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .p0{
+            padding: 0px;
+        }
+        .usermenu a{
+            color: black;
+            font:bold;
+            font-size: 15px;
+        }
+        /*给元素添加确认点击时，把该样式用一个别名代替即可*/
+        .usermenu a:hover{
+            color: #c71e1e7d;
+        }
+        .mybtn{
+            border:1px solid #ff6767;
+            color: #ff6767
+        }
+        #sign:hover{
+            color: #ff6767;
+        }
+        #sign{
+            text-decoration: none;
+            color: black;
+        }
+        #title{
+            border-bottom: 2px solid #ff6767;
+            padding-bottom: 4px;
+            color: #ff6767;
+        }
+    </style>
+</head>
+<body style="height: 100%;">
+
+<nav class="navbar navbar-default topbc " style="margin-bottom: 0px;">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="nav navbar-header">
+            <a class="navbar-brand" href="#">食尚味之源</a>
+        </div>
+        <div class="nav navbar navbar-static-top" style="margin-bottom: 0px;">
+            <p class="navbar-text "><a href="">首页</a></p>
+            <p class="navbar-text "><a href="">菜谱大全</a></p>
+            <p class="navbar-text "><a href="">菜单中心</a></p>
+            <p class="navbar-text "><a href="">留言板</a></p>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #777;">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid p0" style="height: 100%;">
+    <div class="col-sm-1 p0" style="background-color: #f8f8f8;height:100%;">
+        <ul class="nav nav-pills nav-stacked usermenu" >
+            <li role="" class="active"><a href="/user/usercenter" class="text-center">菜谱</a></li>
+            <li role="presentation"><a href="/user/usermenu" class="text-center">菜单</a></li>
+            <li role="presentation"><a href="/user/userconfig" class="text-center">账户设置</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-7">
+        <br>
+        <div class="col-sm-12 ">
+            <div class="col-sm-4 p0">
+                <img src="1.jpg" width="150px;" height="150px;" style="border-radius:150px; ">
+            </div>
+            <div class="col-sm-7 p0">
+                <h3 class="col-sm-12 p0"><a href="" style="color: #ff6767;">不才小生</a></h3>
+                <div class="col-sm-12 p0">
+                    <ul class="list-inline ">
+                        <li class="col-sm-3 p0">
+                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>成长值</span></a>
+                        </li>
+                        <li class="col-sm-3 p0">
+                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>成长值</span></a>
+                        </li>
+                        <li class="col-sm-3 p0">
+                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>成长值</span></a>
+                        </li>
+                        <li class="col-sm-3 p0">
+                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>成长值</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+                <div class="col-sm-12 p0" style="margin-top: 10px;">
+                    <button class="btn btn-default mybtn col-sm-3">通知(1)</button>
+                    <button class="btn btn-default mybtn col-sm-3 col-lg-offset-1">私信</button>
+                </div>
+            </div>
+        </div>
+        <h3>&nbsp;</h3>
+        <div class="container">
+            {{.LayoutContent}}
+        </div>
+    </div>
+</div>
+</body>
+</html>
