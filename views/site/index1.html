@@ -1,0 +1,50 @@
+<div class="container" id="menu" style="margin-top: 20px;">
+    {{range $k,$v := .menu}}
+    <div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div>
+    <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
+    <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>-->
+    {{end}}
+</div>
+
+<div class="container menudetail" style="margin-top: 20px;">
+    <p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
+</div>
+
+<div class="container" id="food" style="margin-top: 20px;">
+    <!-- {{range $k,$v := .dishShow}} -->
+    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+        <div>
+            <img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"/>
+            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+        </div>
+    </div>
+    <!-- {{end}} -->
+</div>
+<div class="container-fluid menudetail2">
+</div>
+
+<div class="container-fluid notice">
+    <h3 class="text-center" style="color: #4d6d2d;padding-top: 30px; ">
+        <p><i>News</i></p>
+        <p>最新消息</p>
+    </h3>
+    <div style="width: 50%;margin: 70px auto;">
+        <ul class="list-unstyled" id="news">
+            {{range $k,$v := .message}}
+            <li>
+                <p class="text-left">{{$v.CreateTime}}<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>{{$v.Content}}</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：{{$v.Name}}</small></p>
+            </li>
+             {{end}}
+            <!--<li>
+                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+            </li>
+            <li>
+                <p class="text-left">[2018-05-06]<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>1点11分啦...</p>
+                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：hxy</small></p>
+            </li>-->
+        </ul>
+    </div>
+</div>

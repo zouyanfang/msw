@@ -24,6 +24,6 @@ func (this *BaseController)Prepare(){
 //TODO
 //是否需要模板
 func (this *BaseController)IsNeddTemplate(){
-	this.Layout = "..."
+	this.Layout = "site/index.html"
 }
 
