@@ -13,4 +13,5 @@ func init() {
 	beego.Router("/toregister",&controllers.AccountController{},"get:ToRegister")
 	beego.AutoRouter(&controllers.IndexController{}) //首页展示
 	beego.AutoRouter(&controllers.DishController{}) //菜谱大全
+	beego.AutoRouter(&controllers.UserController{}) //用户中心
 }
