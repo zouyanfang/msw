@@ -36,11 +36,11 @@ func GetDishList(pageIndex, pageSize int, condition string, paras []string) (d [
 
 //获取菜谱总数
 func GetDishCount( condition string, paras []interface{}) (count int, err error) {
-	sql := `SELECT COUNT(1) FROM dish WHERE 1=1 `
+	sql := `SELECT COUNT(1) FROM dish d WHERE 1=1 `
 	if condition != "" {
 		sql += condition
 	}
-	_, err = orm.NewOrm().Raw(sql, paras).QueryRows(&count)
+	err = orm.NewOrm().Raw(sql, paras).QueryRow(&count)
 	return
 }
 
@@ -55,12 +55,15 @@ type DishInfo struct {
 	SecondMaterial string `description:"辅料"`
 	Tasty          string `description:"口味"`
 	DishSystem     string `description:"菜系"`
+}
+
+type StepInfo struct {
+	Uid            int
 	DishId         int    `description:"菜谱id"`
 	Step           int    `description:"步骤"`
 	StepImg        string `description:"步骤图"`
 	StepDescribe   string `description:"步骤描述"`
 }
-
 //菜谱大全/获取菜谱列表展示
 func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}) (list []DishInfo,err error) {
 	sql := `SELECT d.dish_name,d.dish_img,u.user_img,u.name
@@ -72,19 +75,27 @@ func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}
 	}
 	sql += " LIMIT ?,?"
 	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&list)
-	fmt.Print("sssss",sql,list,err)
 	return
 }
 
 //菜谱大全/获取菜谱详情
 func GetDishInfo(uid,dishId int)(dishInfo []DishInfo,err error)  {
 	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
-			d.tasty,d.dish_system,ds.dish_id,ds.step,ds.step_img,ds.step_describe
+			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
-			LEFT JOIN dish_step ds ON d.id = ds.dish_id
-			WHERE d.uid = ? AND ds.dish_id = ? `
+			WHERE d.uid = ? AND d.id = ? `
 	_,err = orm.NewOrm().Raw(sql,uid,dishId).QueryRows(&dishInfo)
 	return
 }
 
+func GetDishStep(uid,dishId int) (stepInfo []StepInfo,err error)  {
+	sql := `SELECT ds.step,ds.step_img,ds.step_describe,d.uid
+                        FROM dish_step ds
+                        LEFT JOIN dish d ON ds.dish_id = d.id
+                        LEFT JOIN users u ON u.id = d.uid
+                        WHERE d.uid = ? AND ds.dish_id = ?`
+	_,err = orm.NewOrm().Raw(sql,uid,dishId).QueryRows(&stepInfo)
+	fmt.Println("1111111",sql,err)
+	return
+}

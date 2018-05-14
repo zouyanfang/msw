@@ -24,11 +24,14 @@
 		            	<div><p class="text-center lead" style="color: #8d979b"><strong>口味</strong></p></div>
 		            	<div style="width: 50%;margin: 0 auto" id="taste">
 							<ul class="list-inline nav-justified" >
-								<li><p class="menuitems text-center green" style=" border:#1B9C62 solid 2px;">酸</p></li>
-								<li><p class="menuitems text-center pink" style="border:#EF6D89 solid 2px; ">甜</p></li>
-								<li><p class="menuitems text-center green2" style="border:#7CCE2E solid 2px; ">苦</p></li>
-								<li><p class="menuitems text-center red" style="border: #D73E3F solid 2px;">辣</p></li>
-								<li><p class="menuitems text-center blue" style="border:#00ACEA solid 2px; ">咸</p></li>
+                                <li><p class="menuitems text-center red" style="border: #D73E3F solid 2px;">辣</p></li>
+								<li><p class="menuitems text-center green" style=" border:#1B9C62 solid 2px;">咖喱</p></li>
+								<li><p class="menuitems text-center pink" style="border:#EF6D89 solid 2px; ">糖醋</p></li>
+								<li><p class="menuitems text-center green2" style="border:#7CCE2E solid 2px; ">酸甜</p></li>
+								<li><p class="menuitems text-center blue" style="border:#00ACEA solid 2px; ">香甜</p></li>
+                                <li><p class="menuitems text-center pink" style="border:#EF6D89 solid 2px; ">五香</p></li>
+                                <li><p class="menuitems text-center red" style="border: #D73E3F solid 2px;">香鲜</p></li>
+                                <li><p class="menuitems text-center green" style=" border:#1B9C62 solid 2px;">清淡</p></li>
 							</ul>	
 		            	</div>
 
@@ -69,7 +72,9 @@
 		</div>
 
 		<div class="container" >
+
 			{{range $k,$v := .allDish}}
+
 			<div class="col-sm-4">
 				<img class="img-responsive col-sm-12" src="{{$v.DishImg}}">
 				<div class="col-sm-12" >
@@ -83,6 +88,7 @@
 				</div>
 			</div>
 			{{end}}
+				<!--
 			<div class="col-sm-4">
 				<img class="img-responsive col-sm-12" src="3.jpg">
 				<div class="col-sm-12" >
@@ -134,7 +140,7 @@
 					</div>
 				</div>
 			</div>
-			
+			-->
 			<div class="cpntainer">
 				<div class="col-sm-12">
 					<ul class="pager">

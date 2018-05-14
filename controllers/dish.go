@@ -31,23 +31,37 @@ func (this *DishController) GetConditionDishList()  {
 	condition := ""
 	paras := []interface{}{}
 	page,_:= this.GetInt("page",0)
-	taste:= this.GetString("taste")
-	if taste != "" {
-		condition += " tasty = ?"
-		paras = append(paras,taste)
+	tasty:= this.GetString("tasty")
+	if tasty != "" {
+		condition += " AND d.tasty = ?"
+		paras = append(paras,tasty)
 	}
 	area := this.GetString("area")
 	if area != "" {
-		condition += " dish_system = ?"
+		condition += " AND d.dish_system = ?"
 		paras = append(paras,area)
 	}
 	resp = services.GetAllDishList(page,utils.PAFESIZE9,condition,paras)
 
 }
 
-func (this *DishController) GetDishInfo()  {
+//菜谱详情
+func (this *DishController)GetDishDetail(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+
 	uid,_ := this.GetInt("uid")
 	dishId,_ := this.GetInt("dishId")
-	dishInfo := services.GetDishInfo(uid,dishId)
-	this.Data["dishInfo"] = dishInfo
+	dishInfo,stepInfo := services.GetDishInfo(uid,dishId)
+	foodInfo := map[string]interface{}{"dishInfo":dishInfo,"stepInfo":stepInfo}
+	resp.Object = foodInfo
+	resp.Ret = 200
+	/*this.Data["dishInfo"] = dishInfo
+	this.Data["type"] = 2
+	this.IsNeddTemplate()
+	this.TplName = "site/foodetail.html"*/
 }
