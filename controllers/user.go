@@ -1,5 +1,6 @@
 package controllers
 
+import "fmt"
 
 type UserController struct {
 	BaseController
@@ -36,7 +37,7 @@ func (this *UserController)IsNeedTemplate(){
 	this.Layout = "site/user/template.html"
 }
 
-
+//判断是否有用户
 func (this *UserController)IsHaveUser(){
 	if this.User == nil {
 		this.Redirect("/",302)
@@ -44,5 +45,14 @@ func (this *UserController)IsHaveUser(){
 	}
 }
 
+func (this *UserController)Demo(){
+	this.TplName = "site/user/1.html"
+}
+
+func (this *UserController)GetImg(){
+	_,s,_ := this.GetFile("file")
+	fmt.Println(s.Filename)
+	this.ServeJSON()
+}
 
 
