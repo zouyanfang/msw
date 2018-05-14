@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"msw/models"
+	"fmt"
 )
 
 type BaseController struct {
@@ -15,10 +16,12 @@ func (this *BaseController)Prepare(){
 	name := this.Ctx.GetCookie("uid")
 	pwd := this.Ctx.GetCookie("pid")
 	if name != "" && pwd != ""{
-		user,_ := models.Login(name ,pwd)
-		this.Data["user"] = &user
+		this.User,_ = models.Login(name ,pwd)
+		this.Data["user"] = this.User
+	}else {
+		this.Data["user"] = nil
 	}
-	this.Data["user"] = models.User{}
+	fmt.Println(this.User)
 }
 
 //TODO
