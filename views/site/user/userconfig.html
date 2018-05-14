@@ -1,0 +1,48 @@
+<div class="col-sm-12 p0">
+    <ul class="nav nav-tabs" id="mynav">
+        <li role="presentation" class="active" value="1"><a href="#">基础信息</a></li>
+    </ul>
+    <div class="main">
+        <div class="col-sm-12 t" style="margin-top: 20px;" id="mydish" >
+           <form class="col-sm-6">
+               <div class="form-group ">
+                    <label >姓名</label>
+                    <input type="text" class="form-control">
+               </div>
+               <div class="form-group ">
+                   <label >头像</label>
+                   <input type="file" class="form-control">
+               </div>
+               <label>密码修改</label>
+               <div class="form-group">                   
+                   原始密码：<input type="password" name="" class="form-control">
+                   新密码：<input type="password" name="" class="form-control">
+               </div>
+           </form>
+           <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <button class="btn btn-default col-sm-6 pull-right">提交</button>
+                </div>
+           </div>
+        </div>
+<!--         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="releasedish">
+            <p>修改信息</p>
+        </div> -->
+    </div>
+<script type="">
+
+    $("#mynav li").click(function () {
+        var s = $(this).attr("value")
+        $(".main .t").addClass("hidden")
+        if (s == 1){
+            $("#mydish").removeClass("hidden")
+        }else if(s  == 2){
+            $("#releasedish").removeClass("hidden")
+        }
+    })
+
+    $("#mynav li").click(function () {
+        $("#mynav li").removeClass("active")
+        $(this).addClass("active")
+    })
+</script>

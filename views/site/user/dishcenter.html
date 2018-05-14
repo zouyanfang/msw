@@ -5,21 +5,153 @@
         <li role="presentation" value="3"><a href="#">收藏菜谱</a></li>
     </ul>
     <div class="main">
-        <div class="col-sm-12" style="margin-top: 20px;" id="mydish" >
-            <p>我的菜谱</p>
+        <div class="col-sm-12 t" style="margin-top: 20px;" id="mydish" >
+            <div class="container" id="food" style="margin-top: 20px;">
+            {{/*<!-- {{range $k,$v := .dishShow}} -->*/}}
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+                {{/*<!-- {{end}} -->*/}}
+            </div>
         </div>
-        <div class="col-sm-12 hidden" style="margin-top: 20px;" id="releasedish">
-            <p>发布菜谱</p>
+        <div class="col-sm-12 hidden t"  style="margin-top: 20px;" id="releasedish">
+            <form class="col-sm-8">
+                <div class="form-group">
+                    <label>
+                        创建菜谱
+                    </label>
+                    <input type="text" name="" class="form-control">
+                </div>
+                <div class="col-sm-8" style="margin-bottom: 20px;">
+                    <img src=""  id="showimg" style="height: 100px;width: 100px;" alt="菜单图片">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="dishimg" class="control-label" id="addimg">MenuImg</label>
+                    <input type="file" id="dishimg" class="hidden">
+                </div>
+                <div class="form-group">
+                    <div>
+                        <textarea class="form-control" placeholder="添加菜谱描述">
+                        </textarea>
+                    </div>
+                </div>
+                <button class="btn btn-info col-sm-offset-10">创建菜谱</button>
+            </form>
+
+            <div class="col-sm-12" id="dishdetail" style="margin-top: 20px;border-top: 1px solid gray;">
+                <h3>菜谱详情</h3>
+                <form class="col-sm-6">
+                    <div class="form-group col-sm-7">
+                        <label>菜系</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-7">
+                        <label>口味</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-7" id="mainmaterial" >
+                        <label>主料</label>
+                        <input type="" name="" class="form-control" >
+                        <input type="" name="" class="form-control">
+                    </div>
+                    <div class="form-group col-sm-7" id="secondmaterial" >
+                        <label>辅料</label>
+                        <input type="" name="" class="form-control" >
+                        <input type="" name="" class="form-control">
+                    </div>
+                    <div class="col-sm-7">
+                        <button class="col-sm-6 btn btn-default pull-right">提交</button>
+                    </div>
+                </form>
+                <h3 class="col-sm-12">步骤</h3>
+                <div class="col-sm-12" style="margin-bottom: 30px">
+                     <div id="uploader" class="wu-example">
+                        <!--用来存放文件信息-->
+                        <div id="thelist" class="uploader-list"></div>
+                        <div class="btns">
+                            <div id="filePicker" class="hidden">选择文件</div>
+                            <!-- <button id="ctlBtn" class="btn btn-default">开始上传</button> -->
+                        </div>
+                        <!-- <div id="list"></div> -->
+                </div>
+
+                    <div class="container">
+                        <div id="mycontent" class="">
+                            <div class="col-sm-10" style="margin-bottom: 10px;">
+                                <div class="col-sm-3 b" id="list">
+                                    <p class="text-center" ><span class="glyphicon glyphicon-plus fake " id="fake">添加图片</span></p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <textarea class="col-sm-12" style="height: 120px;" placeholder="请输入步骤"></textarea>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <br>
+                        <div class="col-sm-1">
+                            <button class="btn btn-default" id="plus">添加步骤</button>
+                            <button id="ctlBtn" class="btn btn-default">开始上传</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-12 hidden" style="margin-top: 20px;" id="collectdish">
-            <p>收藏菜谱</p>
+        <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="collectdish">
+            <div class="container" id="food" style="margin-top: 20px;">
+            {{/*<!-- {{range $k,$v := .dishShow}} -->*/}}
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                    <div>
+                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
+                        <p class="col-sm-11 text-center">123</p>
+                    </div>
+                </div>
+            {{/*<!-- {{end}} -->*/}}
+            </div>
         </div>
     </div>
 <script type="">
 
     $("#mynav li").click(function () {
         var s = $(this).attr("value")
-        $(".main div").addClass("hidden")
+        $(".main .t").addClass("hidden")
         if (s == 1){
             $("#mydish").removeClass("hidden")
         }else if(s  == 2){
@@ -34,4 +166,173 @@
         $("#mynav li").removeClass("active")
         $(this).addClass("active")
     })
+</script>
+
+
+<script type="text/javascript">
+    
+        $("#dishimg").change(function(){
+        imgPreview()
+        console.log("123123123edflasdjfliJWN")
+    })
+
+     function imgPreview(){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+
+        //获取文件
+        var file = $("#dishimg")[0].files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        reader.readAsDataURL(file)
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementById("showimg");
+            //图片路径设置为读取的图片
+            img.src = e.target.result;
+            console.log(img)
+        };
+    }
+
+    $("#dishimg").change(function(){
+        imgPreview()
+    })
+</script>
+
+<script type="text/javascript">
+    $("#mainmaterial input").blur(function(){
+        $("#mainmaterial").append(`<input type="" name="" class="form-control" >`)
+    });
+
+    $("#secondmaterial input").blur(function(){
+        $("#secondmaterial").append(`<input type="" name="" class="form-control" >`)
+    });
+</script>
+
+<script type="text/javascript">
+    // 初始化Web Uploader
+    var $btn =$("#ctlBtn");   //开始上传
+    $(document).ready(function(){
+        console.log("秀秀秀秀秀")
+    })
+    // 初始化
+    var uploader = WebUploader.create({
+
+        // 选完文件后，是否自动上传。
+        auto: false,
+
+        // 文件接收服务端。
+        server: './getimg',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+
+    // 加入文件时操作
+    uploader.on( 'fileQueued', function( file ) {
+        // var $li = $(
+        //         '<div id="' + file.id + '" class="file-item thumbnail">' +
+        //         '<img>' +
+        //         '<div class="info">' + file.name + '</div>' +
+        //         '</div>'
+        //         ),
+        //         $img = $li.find('img');
+
+        var text = `<img class="col-sm-12 mypic" />`
+        // $list为容器jQuery实例
+        var $list = $("#list")
+        $list.attr('id', 'over')
+        $list.find("p").empty()
+        $list.append( text );
+
+        var $img = $list.find("img")
+
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+            $img.attr( 'src', src );
+        }, 100, 100 );
+    });
+
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress span');
+
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo( $li )
+                    .find('span');
+        }
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).addClass('upload-state-done');
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+        $error.text('上传失败');
+    });
+
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+    $btn.on( 'click', function() {
+        console.log("上传...");
+        var s = uploader.upload();
+        console.log(s)
+        console.log("上传成功");
+    });
+    
+    $(document).on("click","#fake",function(){
+        $("#filePicker input[type='file']" ).click()    
+    })
+
+    $("#plus").click(function(){
+        // 多种校验判断...
+        $("#mycontent").append(`<div class="col-sm-10" style="margin-top: 10px;">
+                                    <div class="col-sm-3 b" id="list">
+                                        <p class="text-center" ><span class="glyphicon glyphicon-plus fake " id="fake">添加图片</span></p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <textarea class="col-sm-12" style="height: 120px;" placeholder="请输入步骤"></textarea>
+                                    </div>
+                                </div>`)
+    });
+
 </script>

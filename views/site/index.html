@@ -245,14 +245,25 @@
             <div class="w3ls-header">
                 <div class="container">
                     <div class="w3ls-header-right">
-                        <ul>
-                            <li class="head-dpdn">
-                                <a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a>
-                            </li>
-                            <li class="head-dpdn">
-                                <a href="/toregister"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
-                            </li>
-                        </ul>
+                        {{if .user}}
+                            <ul>
+                                <li class="head-dpdn">
+                                    <a href="/user/usercenter"><i class="fa fa-home" aria-hidden="true"></i>UserCenter</a>
+                                </li>
+                                <li class="head-dpdn">
+                                    <a href="/loginout"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign Out</a>
+                                </li>
+                            </ul>
+                        {{else}}
+                            <ul>
+                                <li class="head-dpdn">
+                                    <a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a>
+                                </li>
+                                <li class="head-dpdn">
+                                    <a href="/toregister"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a>
+                                </li>
+                            </ul>
+                        {{end}}
                     </div>
                 </div>
             </div>
