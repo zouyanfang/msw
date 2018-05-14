@@ -42,14 +42,14 @@ func (c *AccountController) VerifyPassword()  {
 }
 
 //退出登录
-func (c *AccountController) LogOut ()  {
+func (c *AccountController) LoginOut ()  {
 	uid := c.Ctx.GetCookie("uid")
 	if uid != ""{
 		//清除cookie
 		c.Ctx.SetCookie("uid","0",-1)
 		c.Ctx.SetCookie("pid","0",-1)
 	}
-	c.Ctx.Redirect(302,"/account")
+	c.Ctx.Redirect(302,"/")
 }
 
 //注册

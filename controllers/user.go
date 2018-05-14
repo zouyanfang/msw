@@ -1,25 +1,48 @@
 package controllers
 
 
-
 type UserController struct {
 	BaseController
 }
 
+//用户菜谱页面
+
+
 func (this *UserController)UserCenter(){
 	this.Data["type"] = 1
+
 	this.IsNeedTemplate()
 	this.TplName = "site/user/dishcenter.html"
 }
 
+//用户菜单页面
 func (this *UserController)UserMenu(){
 	this.Data["type"] = 2
 	this.IsNeedTemplate()
 	this.TplName = "site/user/menucenter.html"
 }
 
-func (this *UserController)IsNeedTemplate(){
+//用户个人信息设置页面
+func (this *UserController)UserConfig(){
+	this.Data["type"] = 3
+	this.IsNeedTemplate()
+	this.TplName = "site/user/userconfig.html"
+}
 
+
+//用户模板
+func (this *UserController)IsNeedTemplate(){
+	this.IsHaveUser()
 	this.Layout = "site/user/template.html"
 }
+
+
+func (this *UserController)IsHaveUser(){
+	if this.User == nil {
+		this.Redirect("/",302)
+		return
+	}
+}
+
+
 

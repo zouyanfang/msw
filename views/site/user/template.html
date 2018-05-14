@@ -64,10 +64,10 @@
             <a class="navbar-brand" href="#">食尚味之源</a>
         </div>
         <div class="nav navbar navbar-static-top" style="margin-bottom: 0px;">
-            <p class="navbar-text "><a href="">首页</a></p>
-            <p class="navbar-text "><a href="">菜谱大全</a></p>
-            <p class="navbar-text "><a href="">菜单中心</a></p>
-            <p class="navbar-text "><a href="">留言板</a></p>
+            <p class="navbar-text "><a href="/">首页</a></p>
+            <p class="navbar-text "><a href="/index/dishcenter">菜谱大全</a></p>
+            <p class="navbar-text "><a href="/index/menucenter">菜单中心</a></p>
+            <p class="navbar-text "><a href="/index/message">留言板</a></p>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color: #777;">Sign Out</a>
@@ -79,9 +79,21 @@
 <div class="container-fluid p0" style="height: 100%;">
     <div class="col-sm-1 p0" style="background-color: #f8f8f8;height:100%;">
         <ul class="nav nav-pills nav-stacked usermenu" >
+            {{if eq .type 1}}
             <li role="" class="active"><a href="/user/usercenter" class="text-center">菜谱</a></li>
+            {{else}}
+            <li role="" class=""><a href="/user/usercenter" class="text-center">菜谱</a></li>
+            {{end}}
+            {{if eq .type 2}}
+            <li role="presentation" class="active"><a href="/user/usermenu" class="text-center">菜单</a></li>
+            {{else}}
             <li role="presentation"><a href="/user/usermenu" class="text-center">菜单</a></li>
-            <li role="presentation"><a href="/user/userconfig" class="text-center">账户设置</a></li>
+            {{end}}
+            {{if eq .type 3}}
+            <li role="presentation" class="active"><a href="/user/userconfig" class="text-center">账户设置</a></li>
+            {{else}}
+                <li role="presentation"><a href="/user/userconfig" class="text-center">账户设置</a></li>
+            {{end}}
         </ul>
     </div>
     <div class="col-sm-7">
