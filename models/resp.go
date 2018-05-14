@@ -7,3 +7,9 @@ type  BaseMsgResp struct {
 	Object interface{}
 }
 
+//菜谱返回体
+type DishResp struct {
+	BaseMsgResp
+	Page int
+}
+

@@ -18,3 +18,10 @@ func PageCount(pageSize,count int)(pages int){
 	pages = count /pageSize+1
 	return
 }
+
+func IsHaveNext(page,pages int)(bool){
+	if page >= pages {
+		return false
+	}
+	return true
+}
