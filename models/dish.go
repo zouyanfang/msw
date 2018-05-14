@@ -46,6 +46,7 @@ func GetDishCount( condition string, paras []interface{}) (count int, err error)
 
 //菜谱详情
 type DishInfo struct {
+	Id 			   int
 	Uid            int
 	UserImg        string `description:"用户头像"`
 	Name           string `description:"用户昵称"`
@@ -55,6 +56,9 @@ type DishInfo struct {
 	SecondMaterial string `description:"辅料"`
 	Tasty          string `description:"口味"`
 	DishSystem     string `description:"菜系"`
+	CollectCount   int    `description:"收藏人数"`
+	PopularCount   int    `description:"人气"`
+	DishDescribe   string `description:"菜谱描述"`
 }
 
 type StepInfo struct {
@@ -66,7 +70,7 @@ type StepInfo struct {
 }
 //菜谱大全/获取菜谱列表展示
 func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}) (list []DishInfo,err error) {
-	sql := `SELECT d.dish_name,d.dish_img,u.user_img,u.name
+	sql := `SELECT d.dish_name,d.dish_img,u.user_img,u.name,d.uid,d.id,d.collect_count,d.popular_count
 			FROM dish d
 			LEFT JOIN users u ON u.id = d.uid
 			WHERE 1 = 1 `
@@ -79,13 +83,13 @@ func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}
 }
 
 //菜谱大全/获取菜谱详情
-func GetDishInfo(uid,dishId int)(dishInfo []DishInfo,err error)  {
+func GetDishInfo(uid,dishId int)(dishInfo *DishInfo,err error)  {
 	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
 			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
 			WHERE d.uid = ? AND d.id = ? `
-	_,err = orm.NewOrm().Raw(sql,uid,dishId).QueryRows(&dishInfo)
+	err = orm.NewOrm().Raw(sql,uid,dishId).QueryRow(&dishInfo)
 	return
 }
 

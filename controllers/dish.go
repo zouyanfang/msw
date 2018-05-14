@@ -47,21 +47,24 @@ func (this *DishController) GetConditionDishList()  {
 
 //菜谱详情
 func (this *DishController)GetDishDetail(){
-	var resp models.BaseMsgResp
+	/*var resp models.BaseMsgResp
 	resp.Ret = 403
 	defer func() {
 		this.Data["json"] = resp
 		this.ServeJSON()
-	}()
+	}()*/
 
 	uid,_ := this.GetInt("uid")
 	dishId,_ := this.GetInt("dishId")
-	dishInfo,stepInfo := services.GetDishInfo(uid,dishId)
-	foodInfo := map[string]interface{}{"dishInfo":dishInfo,"stepInfo":stepInfo}
+	dishInfo,stepInfo,mainMaterial,secondMaterial := services.GetDishInfo(uid,dishId)
+	/*foodInfo := map[string]interface{}{"dishInfo":dishInfo,"stepInfo":stepInfo,"material":material}
 	resp.Object = foodInfo
-	resp.Ret = 200
-	/*this.Data["dishInfo"] = dishInfo
+	resp.Ret = 200*/
+	this.Data["dishInfo"] = dishInfo
+	this.Data["stepInfo"] = stepInfo
+	this.Data["mainMaterial"] = mainMaterial
+	this.Data["secondMaterial"] = secondMaterial
 	this.Data["type"] = 2
 	this.IsNeddTemplate()
-	this.TplName = "site/foodetail.html"*/
+	this.TplName = "site/foodetail.html"
 }

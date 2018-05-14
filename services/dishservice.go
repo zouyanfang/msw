@@ -57,15 +57,13 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 }
 
 //获取菜谱信息
-func GetDishInfo(uid,dishId int) (dish []models.DishInfo,step []models.StepInfo) {
+func GetDishInfo(uid,dishId int) (dish *models.DishInfo,step []models.StepInfo,mainMaterial []string,secondMaterial []string) {
 	dishInfo,err := models.GetDishInfo(uid,dishId)
 	stepInfo,err := models.GetDishStep(uid,dishId)
-	for _,v := range dishInfo{
-		strings.Split(v.MainMaterial,"/")
-	}
+	mainMaterial = strings.Split(dishInfo.MainMaterial,"/")
+	secondMaterial = strings.Split(dishInfo.SecondMaterial,"/")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-
-	return dishInfo,stepInfo
+	return dishInfo,stepInfo,mainMaterial,secondMaterial
 }

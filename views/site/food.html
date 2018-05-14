@@ -75,7 +75,7 @@
 
 			{{range $k,$v := .allDish}}
 
-			<div class="col-sm-4">
+			<a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-4">
 				<img class="img-responsive col-sm-12" src="{{$v.DishImg}}">
 				<div class="col-sm-12" >
 					<div class="col-sm-4">
@@ -86,7 +86,7 @@
 						<p class="col-sm-12">菜名：{{$v.DishName}}</p>
 					</div>
 				</div>
-			</div>
+			</a>
 			{{end}}
 				<!--
 			<div class="col-sm-4">
