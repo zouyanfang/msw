@@ -47,23 +47,27 @@ func (this *DishController) GetConditionDishList()  {
 
 //菜谱详情
 func (this *DishController)GetDishDetail(){
-	/*var resp models.BaseMsgResp
-	resp.Ret = 403
-	defer func() {
-		this.Data["json"] = resp
-		this.ServeJSON()
-	}()*/
-
+	paras:= []interface{}{}
+	conditon := ""
+	page,_ := this.GetInt("page",0)
 	uid,_ := this.GetInt("uid")
+	if uid != 0 {
+		conditon += " AND  "
+		paras = append(paras,uid)
+	}
 	dishId,_ := this.GetInt("dishId")
-	dishInfo,stepInfo,mainMaterial,secondMaterial := services.GetDishInfo(uid,dishId)
-	/*foodInfo := map[string]interface{}{"dishInfo":dishInfo,"stepInfo":stepInfo,"material":material}
-	resp.Object = foodInfo
-	resp.Ret = 200*/
-	this.Data["dishInfo"] = dishInfo
-	this.Data["stepInfo"] = stepInfo
-	this.Data["mainMaterial"] = mainMaterial
-	this.Data["secondMaterial"] = secondMaterial
+	if dishId != 0  {
+		conditon += " AND "
+		paras = append(paras,dishId)
+	}
+	dishInfoResp := services.GetDishInfo(uid,dishId)
+	dishCommnet := services.GetDishComment(page,utils.PAFESIZE5," ORDER BY ds.comment_date DESC",paras)
+
+	this.Data["dishInfo"] = dishInfoResp.DishDetail
+	this.Data["stepInfo"] = dishInfoResp.StepDetail
+	this.Data["mainMaterial"] = dishInfoResp.MainMaterial
+	this.Data["secondMaterial"] = dishInfoResp.SecondMaterial
+	this.Data["dishComment"] = dishCommnet.Object
 	this.Data["type"] = 2
 	this.IsNeddTemplate()
 	this.TplName = "site/foodetail.html"

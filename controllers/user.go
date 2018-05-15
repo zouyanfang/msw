@@ -40,7 +40,7 @@ func (this *UserController)IsNeedTemplate(){
 //判断是否有用户
 func (this *UserController)IsHaveUser(){
 	if this.User == nil {
-		this.Redirect("/",302)
+		this.Redirect("/login",302)
 		return
 	}
 }
@@ -54,5 +54,6 @@ func (this *UserController)GetImg(){
 	fmt.Println(s.Filename)
 	this.ServeJSON()
 }
+
 
 

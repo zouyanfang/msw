@@ -14,3 +14,11 @@ type DishResp struct {
 	StepInfo
 }
 
+//菜谱详情响应体
+type DishDetailResp struct {
+	BaseMsgResp
+	DishDetail *DishInfo
+	StepDetail []StepInfo
+	MainMaterial []string
+	SecondMaterial []string
+}

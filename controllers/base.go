@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"msw/models"
-	"fmt"
 )
 
 type BaseController struct {
@@ -21,7 +20,6 @@ func (this *BaseController)Prepare(){
 	}else {
 		this.Data["user"] = nil
 	}
-	fmt.Println(this.User)
 }
 
 //TODO

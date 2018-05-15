@@ -57,13 +57,46 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 }
 
 //获取菜谱信息
-func GetDishInfo(uid,dishId int) (dish *models.DishInfo,step []models.StepInfo,mainMaterial []string,secondMaterial []string) {
+func GetDishInfo(uid,dishId int) (dishDetail models.DishDetailResp) {
 	dishInfo,err := models.GetDishInfo(uid,dishId)
 	stepInfo,err := models.GetDishStep(uid,dishId)
-	mainMaterial = strings.Split(dishInfo.MainMaterial,"/")
-	secondMaterial = strings.Split(dishInfo.SecondMaterial,"/")
+	mainMaterial := strings.Split(dishInfo.MainMaterial,"/")
+	secondMaterial := strings.Split(dishInfo.SecondMaterial,"/")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	return dishInfo,stepInfo,mainMaterial,secondMaterial
+	dishDetail.DishDetail = dishInfo
+	dishDetail.StepDetail = stepInfo
+	dishDetail.MainMaterial = mainMaterial
+	dishDetail.SecondMaterial = secondMaterial
+	return
+}
+
+//获取菜谱评论
+func GetDishComment(page,pageSize int,condition string,paras []interface{}) (resp models.DishResp)  {
+	resp.Ret = 403
+	dishComment,err := models.GetDishComment(utils.StartIndex(page,pageSize),utils.PAFESIZE5,condition,paras)
+	if err != nil  {
+		if err.Error() != utils.ERRROWS{
+			resp.Msg = "查询菜谱评论失败!"
+			return
+		}
+		resp.Msg = " 查询不到数据"
+		resp.Ret = 200
+		return
+	}
+	count,err := models.GetDishCommentCount(condition,paras)
+	if err != nil{
+		resp.Msg = "查询总条数失败!"
+		return
+	}
+	pages := utils.PageCount(utils.PAFESIZE5,count)
+	if utils.IsHaveNext(page,pages){
+		resp.Page = page
+	}else {
+		resp.Page = 0
+	}
+	resp.Object = dishComment
+	resp.Ret = 200
+	return
 }
