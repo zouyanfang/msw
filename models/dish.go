@@ -84,7 +84,7 @@ func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}
 
 //菜谱大全/获取菜谱详情
 func GetDishInfo(uid,dishId int)(dishInfo *DishInfo,err error)  {
-	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
+	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,d.dish_name,
 			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id

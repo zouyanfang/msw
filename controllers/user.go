@@ -1,6 +1,6 @@
 package controllers
 
-import "fmt"
+
 
 type UserController struct {
 	BaseController
@@ -50,8 +50,7 @@ func (this *UserController)Demo(){
 }
 
 func (this *UserController)GetImg(){
-	_,s,_ := this.GetFile("file")
-	fmt.Println(s.Filename)
+	//_,s,_ := this.GetFile("file")
 	this.ServeJSON()
 }
 

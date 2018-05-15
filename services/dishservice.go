@@ -67,3 +67,5 @@ func GetDishInfo(uid,dishId int) (dish *models.DishInfo,step []models.StepInfo,m
 	}
 	return dishInfo,stepInfo,mainMaterial,secondMaterial
 }
+
+
