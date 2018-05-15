@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/astaxie/beego/orm"
 	"fmt"
+	"github.com/astaxie/beego/orm"
 )
 
 //菜谱
@@ -35,7 +35,7 @@ func GetDishList(pageIndex, pageSize int, condition string, paras []string) (d [
 }
 
 //获取菜谱总数
-func GetDishCount( condition string, paras []interface{}) (count int, err error) {
+func GetDishCount(condition string, paras []interface{}) (count int, err error) {
 	sql := `SELECT COUNT(1) FROM dish d WHERE 1=1 `
 	if condition != "" {
 		sql += condition
@@ -46,7 +46,7 @@ func GetDishCount( condition string, paras []interface{}) (count int, err error)
 
 //菜谱详情
 type DishInfo struct {
-	Id 			   int
+	Id             int
 	Uid            int
 	UserImg        string `description:"用户头像"`
 	Name           string `description:"用户昵称"`
@@ -62,14 +62,23 @@ type DishInfo struct {
 }
 
 type StepInfo struct {
-	Uid            int
-	DishId         int    `description:"菜谱id"`
-	Step           int    `description:"步骤"`
-	StepImg        string `description:"步骤图"`
-	StepDescribe   string `description:"步骤描述"`
+	Uid          int
+	DishId       int    `description:"菜谱id"`
+	Step         int    `description:"步骤"`
+	StepImg      string `description:"步骤图"`
+	StepDescribe string `description:"步骤描述"`
 }
+
+type DishComment struct {
+	Id          int    `description:"评论id"`
+	Uid         int    `description:"用户id"`
+	DishId      int    `description:"菜谱id"`
+	Comment     string `description:"评论"`
+	CommentTime string `description:"评论时间"`
+}
+
 //菜谱大全/获取菜谱列表展示
-func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}) (list []DishInfo,err error) {
+func GetAllDishList(startIndex, pageSize int, condition string, paras []interface{}) (list []DishInfo, err error) {
 	sql := `SELECT d.dish_name,d.dish_img,u.user_img,u.name,d.uid,d.id,d.collect_count,d.popular_count
 			FROM dish d
 			LEFT JOIN users u ON u.id = d.uid
@@ -78,28 +87,52 @@ func GetAllDishList(startIndex,pageSize int,condition string,paras []interface{}
 		sql += condition
 	}
 	sql += " LIMIT ?,?"
-	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&list)
+	_, err = orm.NewOrm().Raw(sql, paras, startIndex, pageSize).QueryRows(&list)
 	return
 }
 
 //菜谱大全/获取菜谱详情
-func GetDishInfo(uid,dishId int)(dishInfo *DishInfo,err error)  {
+func GetDishInfo(uid, dishId int) (dishInfo *DishInfo, err error) {
 	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
 			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
 			WHERE d.uid = ? AND d.id = ? `
-	err = orm.NewOrm().Raw(sql,uid,dishId).QueryRow(&dishInfo)
+	err = orm.NewOrm().Raw(sql, uid, dishId).QueryRow(&dishInfo)
 	return
 }
 
-func GetDishStep(uid,dishId int) (stepInfo []StepInfo,err error)  {
+func GetDishStep(uid, dishId int) (stepInfo []StepInfo, err error) {
 	sql := `SELECT ds.step,ds.step_img,ds.step_describe,d.uid
                         FROM dish_step ds
                         LEFT JOIN dish d ON ds.dish_id = d.id
                         LEFT JOIN users u ON u.id = d.uid
                         WHERE d.uid = ? AND ds.dish_id = ?`
-	_,err = orm.NewOrm().Raw(sql,uid,dishId).QueryRows(&stepInfo)
-	fmt.Println("1111111",sql,err)
+	_, err = orm.NewOrm().Raw(sql, uid, dishId).QueryRows(&stepInfo)
+	fmt.Println("1111111", sql, err)
 	return
+}
+
+//获取菜谱评论
+func GetDishComment(startIndex,pageSize int,condition string,paras []interface{}) (comment []DishComment, err error) {
+	sql := `SELECT * FROM dish_comment ds
+			WHERE 1 = 1`
+	if condition != "" {
+		sql += condition
+	}
+	sql += " LIMIT ?,?"
+	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&comment)
+	fmt.Println("1111111",sql,paras,err)
+	return
+}
+
+//获取菜单评论总条数
+func GetDishCommentCount(condition string,paras []interface{}) (count int,err error)  {
+		sql := `SELECT COUNT(1) FROM dish_comment ds
+				WHERE 1 = 1`
+		if condition != "" {
+			sql += condition
+		}
+		err = orm.NewOrm().Raw(sql,paras).QueryRow(&count)
+		return
 }
