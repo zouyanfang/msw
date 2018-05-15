@@ -3,6 +3,8 @@ package services
 import (
 	"msw/models"
 	"msw/utils"
+	"fmt"
+	"strings"
 )
 
 //菜谱业务
@@ -27,7 +29,7 @@ func GetDishList(page ,pageSize int,condition string ,paras []string)(resp model
 
 //获取菜谱大全
 func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (resp models.DishResp)  {
-	resp.Ret = 430
+	resp.Ret = 403
 	allDish,err := models.GetAllDishList(utils.StartIndex(page,pageSize),pageSize,condition,paras)
 	if err != nil{
 		if err.Error() != utils.ERRROWS {
@@ -55,19 +57,13 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 }
 
 //获取菜谱信息
-func GetDishInfo(uid,dishId int) (resp models.BaseMsgResp) {
-	resp.Ret = 403
+func GetDishInfo(uid,dishId int) (dish *models.DishInfo,step []models.StepInfo,mainMaterial []string,secondMaterial []string) {
 	dishInfo,err := models.GetDishInfo(uid,dishId)
+	stepInfo,err := models.GetDishStep(uid,dishId)
+	mainMaterial = strings.Split(dishInfo.MainMaterial,"/")
+	secondMaterial = strings.Split(dishInfo.SecondMaterial,"/")
 	if err != nil {
-		if err.Error() != utils.ERRROWS {
-			resp.Msg = "查询菜谱信息失败！"
-			return
-		}
-		resp.Msg = "查不到数据"
-		resp.Ret = 200
+		fmt.Println(err.Error())
 	}
-
-	resp.Ret = 200
-	resp.Object = dishInfo
-	return
+	return dishInfo,stepInfo,mainMaterial,secondMaterial
 }

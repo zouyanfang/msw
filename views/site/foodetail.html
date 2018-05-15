@@ -2,7 +2,7 @@
 	<div class="container" style="margin-bottom:20px;">  
     <ol class="breadcrumb w3l-crumbs">
       <li><a href="#"><i class="fa fa-home"></i>菜谱中心</a></li> 
-      <li class="active">菜谱名</li>
+      <li class="active">{{.dishInfo.DishName}}</li>
     </ol>
   </div>
 	<!-- 不同页面显示的区域 -->
@@ -12,15 +12,15 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="col-sm-6">
-					<h3 class="text-left col-sm-6" style="margin-top: 15px;">菜名</h3>
-					<div class="col-sm-6"><img src="1.jpg" style="height: 40px;width: 40px;border-radius: 40px;" class="pull-right" ><p class="col-sm-12 text-right">123</p></div>
+					<h3 class="text-left col-sm-6" style="margin-top: 15px;">{{.dishInfo.DishName}}</h3>
+					<div class="col-sm-6"><img src="{{.dishInfo.UserImg}}" style="height: 40px;width: 40px;border-radius: 40px;" class="pull-right" ><p class="col-sm-12 text-right">{{.dishInfo.Name}}</p></div>
 				</div>
 			</div>
 			<div class="col-sm-6">
 				<img src="1.jpg" class="img-responsive" id="sb">
 			</div>
 			<div class="col-sm-6" style="margin-top: 60px;">
-				<p class="lead">“菜名的描述”</p>
+				<p class="lead">{{.dishInfo.DishDescribe}}</p>
 			</div>
 		</div>
 			<div class="col-sm-6">
@@ -29,10 +29,12 @@
 					<h4 class="text-left">主料</h4>
 					<div class="col-sm-12">
 						<ul class="list-unstyled list-inline nav-justified">
-							<li><strong>辣椒</strong></li>
-							<li><strong>番茄</strong></li>
+							{{range $k,$v := .mainMaterial}}
+							<li><strong>{{$v}}</strong></li>
+							<!--<li><strong>番茄</strong></li>
 							<li><strong>土豆</strong></li>
-							<li><strong>牛肉</strong></li>
+							<li><strong>牛肉</strong></li>-->
+							{{end}}
 						</ul>
 					</div>
 				</div>
@@ -40,29 +42,32 @@
 					<h4 class="text-left">辅料</h4>
 					<div class="col-sm-12">
 						<ul class="list-unstyled list-inline nav-justified">
-							<li><strong>辣椒</strong></li>
-							<li><strong>番茄</strong></li>
+							{{range $k,$v := .secondMaterial}}
+							<li><strong>{{$v}}</strong></li>
+							<!--<li><strong>番茄</strong></li>
 							<li><strong>土豆</strong></li>
-							<li><strong>牛肉</strong></li>
+							<li><strong>牛肉</strong></li>-->
+							{{end}}
 						</ul>
 					</div>
 				</div>
 
 				<h3>步骤</h3>
+				{{range $k,$v := .stepInfo}}
 				<div class="col-sm-12">
 					<div class=col-sm-6>
-						<img src="1.jpg" class="img-responsive">
+						<img src="{{$v.StepImg}}" class="img-responsive">
 					</div>
 					<div class="col-sm-6">
-						<h3 class="text-left" >1.</h3>
-						<p class="text-left" >首先，调整好心态</p>
+						<h3 class="text-left" >{{$v.Step}}.</h3>
+						<p class="text-left" >{{$v.StepDescribe}}</p>
 					</div>
 				</div>
-
+				{{end}}
 				<div class="col-sm-12" style="margin-top: 20px;">
 
-					<p class="col-sm-4" ><span class="glyphicon glyphicon-fire" style="color: red;font-size: 20px;"></span>人气：</p>
-					<p class="col-sm-4" ><span class="glyphicon glyphicon-heart" style="color: gray;font-size: 20px;"></span>收藏：</p>
+					<p class="col-sm-4" ><span class="glyphicon glyphicon-fire" style="color: red;font-size: 20px;"></span>人气：{{.dishInfo.PopularCount}}</p>
+					<p class="col-sm-4" ><span class="glyphicon glyphicon-heart" style="color: gray;font-size: 20px;"></span>收藏：{{.dishInfo.CollectCount}}</p>
 					<p class="col-sm-4" ><span class="glyphicon glyphicon-plus" style="color: gray;font-size: 20px;" id="add" data-toggle="modal" data-target="#myModal"></span>添加：</p>
 				</div>
 				

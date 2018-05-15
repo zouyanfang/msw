@@ -11,5 +11,6 @@ type  BaseMsgResp struct {
 type DishResp struct {
 	BaseMsgResp
 	Page int
+	StepInfo
 }
 

@@ -50,12 +50,12 @@ func (this *IndexController)MenuCenter(){
 	this.TplName = "site/menu.html"
 }
 
-//菜谱详情
-func (this *IndexController)FoodDetail(){
+/*//菜谱详情
+	func (this *IndexController)FoodDetail(){
 	this.Data["type"] = 2
 	this.IsNeddTemplate()
 	this.TplName = "site/foodetail.html"
-}
+}*/
 
 //菜单详情
 func (this *IndexController)MenuDetail(){
