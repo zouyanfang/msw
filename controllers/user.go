@@ -1,6 +1,9 @@
 package controllers
 
-
+import (
+	"msw/models"
+	"msw/services"
+	)
 
 type UserController struct {
 	BaseController
@@ -40,7 +43,7 @@ func (this *UserController)IsNeedTemplate(){
 //判断是否有用户
 func (this *UserController)IsHaveUser(){
 	if this.User == nil {
-		this.Redirect("/",302)
+		this.Redirect("/login",302)
 		return
 	}
 }
@@ -52,6 +55,28 @@ func (this *UserController)Demo(){
 func (this *UserController)GetImg(){
 	//_,s,_ := this.GetFile("file")
 	this.ServeJSON()
+}
+
+func (this *UserController)ReleaseTalk(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if (this.User == nil ){
+		resp.Msg = "用户还未登入，请先登入"
+		return
+	}
+	content := this.GetString("content")
+	dishid,err := this.GetInt("dishid")
+	if err != nil {
+		resp.Msg = "获取参数失败"
+		return
+	}
+	resp = services.ReleaseDishTalk(dishid,this.User.Id,content)
+	return
+
 }
 
 
