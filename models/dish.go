@@ -73,8 +73,10 @@ type DishComment struct {
 	Id          int    `description:"评论id"`
 	Uid         int    `description:"用户id"`
 	DishId      int    `description:"菜谱id"`
-	Comment     string `description:"评论"`
-	CommentTime string `description:"评论时间"`
+	Content     string `description:"评论"`
+	CommentDate string `description:"评论时间"`
+	Name        string `description:"用户名"`
+	UserImg     string `description:"用户头像"`
 }
 
 //菜谱大全/获取菜谱列表展示
@@ -92,8 +94,9 @@ func GetAllDishList(startIndex, pageSize int, condition string, paras []interfac
 }
 
 //菜谱大全/获取菜谱详情
-func GetDishInfo(uid, dishId int) (dishInfo *DishInfo, err error) {
-	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,
+
+func GetDishInfo(uid,dishId int)(dishInfo *DishInfo,err error)  {
+	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,d.dish_name,
 			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
@@ -109,30 +112,32 @@ func GetDishStep(uid, dishId int) (stepInfo []StepInfo, err error) {
                         LEFT JOIN users u ON u.id = d.uid
                         WHERE d.uid = ? AND ds.dish_id = ?`
 	_, err = orm.NewOrm().Raw(sql, uid, dishId).QueryRows(&stepInfo)
-	fmt.Println("1111111", sql, err)
 	return
 }
 
 //获取菜谱评论
-func GetDishComment(startIndex,pageSize int,condition string,paras []interface{}) (comment []DishComment, err error) {
-	sql := `SELECT * FROM dish_comment ds
-			WHERE 1 = 1`
-	if condition != "" {
-		sql += condition
-	}
-	sql += " LIMIT ?,?"
-	_,err = orm.NewOrm().Raw(sql,paras,startIndex,pageSize).QueryRows(&comment)
-	fmt.Println("1111111",sql,paras,err)
+func GetDishComment(startIndex,pageSize, dishid int) (comment []DishComment, err error) {
+	sql := `SELECT *,u.* FROM dish_comment ds
+			LEFT JOIN users u on u.id = ds.uid
+			WHERE dish_id = ?
+			ORDER BY ds.comment_date DESC
+ 			LIMIT ?,? `
+	_,err = orm.NewOrm().Raw(sql,dishid,startIndex,pageSize).QueryRows(&comment)
+	fmt.Println(sql,dishid,comment,startIndex,pageSize)
 	return
 }
 
 //获取菜单评论总条数
-func GetDishCommentCount(condition string,paras []interface{}) (count int,err error)  {
-		sql := `SELECT COUNT(1) FROM dish_comment ds
-				WHERE 1 = 1`
-		if condition != "" {
-			sql += condition
-		}
-		err = orm.NewOrm().Raw(sql,paras).QueryRow(&count)
-		return
+func GetDishCommentCount(dishId int) (count int,err error)  {
+	sql := `SELECT COUNT(1) FROM dish_comment ds
+			WHERE dish_id = ? `
+	err = orm.NewOrm().Raw(sql,dishId).QueryRow(&count)
+	return
+}
+
+func InsertTalk(dishId,uid int,content string)(err error){
+	sql := `INSERT INTO dish_comment (uid,dish_id,content,comment_date) VALUES (?,?,?,NOW())`
+	_,err = orm.NewOrm().Raw(sql,uid,dishId,content).Exec()
+	return
+
 }

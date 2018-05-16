@@ -25,3 +25,5 @@ func GetMessageList(startIndex, pageSize int, condition string, paras []interfac
 	_, err = orm.NewOrm().Raw(sql, paras, startIndex, pageSize).QueryRows(&list)
 	return
 }
+
+

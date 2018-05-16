@@ -35,3 +35,5 @@ func AddUser(account, pwd string) (err error) {
 	_, err = o.Raw(sql, account, pwd).Exec()
 	return
 }
+
+

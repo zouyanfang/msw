@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<img src="1.jpg" class="img-responsive" id="sb">
+				<img src="{{.dishInfo.DishImg}}" class="img-responsive" id="sb" style="height: 300px;width:550px; ">
 			</div>
 			<div class="col-sm-6" style="margin-top: 60px;">
 				<p class="lead">{{.dishInfo.DishDescribe}}</p>
@@ -79,74 +79,46 @@
                     <div class="col-lg-4">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="badge list-group-item-success">4</span>
+                                <span class="badge list-group-item-success">{{.count}}</span>
                                 这里已经有很多评论啦！
                             </li>
                         </ul>
                     </div>
                 </div>
-
-
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="./images/36.jpg" alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">小明</h4>
-                        <p>有来过，666666。</p>
-                        <p>4楼&nbsp;&nbsp;2017-08-08&nbsp;&nbsp;23:15发表</p>
-                        <hr>
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="./images/36.jpg" alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">linda</h4>
-                        <p>Cras sit amet nibh libero, in gr</p>
-                        <p>3楼&nbsp;&nbsp;2017-08-08&nbsp;&nbsp;23:15发表</p>
-                        <hr>
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="./images/36.jpg" alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">213213hkhkh</h4>
-                        <p>Clla vel metus scelerisqpis.</p>
-                        <p>2楼&nbsp;&nbsp;2017-08-08&nbsp;&nbsp;23:15发表</p>
-                        <hr>
-                    </div>
-                </div>
-
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="./images/36.jpg" alt="...">
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Media heading</h4>
-                        <p>Cras sit amet nibherra turpis.</p>
-                        <p>1楼&nbsp;&nbsp;2017-08-08&nbsp;&nbsp;23:15发表</p>
-                        <hr>
-                    </div>
+				<div class="col-sm-12" id="talk">
+					{{if eq .count 0}}
+                        <div class="alert alert-success agileits" role="alert">
+                            <strong>(；′⌒`)</strong> 没有评论快来占沙发呀W(๑＞ڡ＜)✿
+						</div>
+					{{else}}
+					{{ range $i,$v := .dishComment}}
+					<div class="media">
+						<div class="media-left">
+							<img class="media-object" src="{{$v.UserImg}}" alt="..." style="width: 50px;height: 50px;">
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">{{$v.Name}}</h4>
+							<p>{{$v.Content}}</p>
+							<p>&nbsp;&nbsp;{{$v.CommentDate}}发表</p>
+							<hr>
+						</div>
+					</div>
+					{{end}}
+					{{end}}
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-default btn-block">查看更多</button>
+                    <button class="btn btn-default btn-block" value="{{.page}}" id="moretalk">查看更多</button>
                 </div>
 			</div>
 
 
 
 			<div class="col-sm-8" style="margin-top: 20px;margin-bottom: 20px;">
-				<textarea class=" form-control col-sm-8" placeholder="来评论啊哈哈哈" ></textarea>
+				<textarea class=" form-control col-sm-8" placeholder="来评论啊哈哈哈" id="text"></textarea>
 			</div>	
 			<div class="col-sm-2" style="margin-top: 40px;">
-				<button class="btn btn-info">提交</button>
+				<button class="btn btn-info" id="releasetalk">提交</button>
 			</div>
 			</div>
 		</div>
@@ -230,3 +202,56 @@
   </div>
 </div>
 <script src="../static/js/food.js"></script>
+<script type="text/javascript">
+	$("#moretalk").click(function(){
+        var page = $(this).attr("value")
+	    if (page == 0){
+	    	alert("没有更多的评论内容了")
+	        return
+		}
+		page = parseInt(page)+1
+		$.ajax({
+			url: '/dish/gettalk',
+			type: 'get',
+			dataType: 'json',
+			data: {"page": page,"dishid":{{.dishid}}},
+			success:function(result){
+				if (result.Ret == 200) {
+					for(var i = 0 ;i <result.Object.length;i++){
+						var text = "<div class='media'>"+
+						"<div class='media-left'>"+
+							"<img class='media-object' src='"+result.Object[i].UserImg+"' alt='...' style='width: 50px;height: 50px;'>"+
+						"</div>"+
+						"<div class='media-body'>"+
+							"<h4 class='media-heading'>"+result.Object[i].Name+"</h4>"+
+							"<p>"+result.Object[i].Content+"</p>"+
+							"<p>&nbsp;&nbsp;"+result.Object[i].CommentDate+"发表</p>"+
+							"<hr>"+
+						"</div>"+
+					"</div>"
+						$('#talk').append(text)
+					}
+					$("#moretalk").attr("value",result.Page)
+				}
+			}
+		})
+	})
+
+	$("#releasetalk").click(function(){
+		var content = $("#text").val()
+		$.ajax({
+			url: '/user/releasetalk',
+			type: 'post',
+			dataType: 'json',
+			data: {"dishid":{{.dishid}},"content":content},
+			success:function(result){
+				if (result.Ret == 200){
+					location.reload()
+					return
+				}
+				alert(result.Msg)
+			}
+		})
+		
+	})
+</script>

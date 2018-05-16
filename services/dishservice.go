@@ -73,9 +73,9 @@ func GetDishInfo(uid,dishId int) (dishDetail models.DishDetailResp) {
 }
 
 //获取菜谱评论
-func GetDishComment(page,pageSize int,condition string,paras []interface{}) (resp models.DishResp)  {
+func GetDishComment(page,pageSize ,dishId int) (resp models.DishResp)  {
 	resp.Ret = 403
-	dishComment,err := models.GetDishComment(utils.StartIndex(page,pageSize),utils.PAFESIZE5,condition,paras)
+	dishComment,err := models.GetDishComment(utils.StartIndex(page,pageSize),utils.PAFESIZE5,dishId)
 	if err != nil  {
 		if err.Error() != utils.ERRROWS{
 			resp.Msg = "查询菜谱评论失败!"
@@ -85,7 +85,8 @@ func GetDishComment(page,pageSize int,condition string,paras []interface{}) (res
 		resp.Ret = 200
 		return
 	}
-	count,err := models.GetDishCommentCount(condition,paras)
+	count,err := models.GetDishCommentCount(dishId)
+	resp.Count = count
 	if err != nil{
 		resp.Msg = "查询总条数失败!"
 		return
@@ -100,3 +101,4 @@ func GetDishComment(page,pageSize int,condition string,paras []interface{}) (res
 	resp.Ret = 200
 	return
 }
+

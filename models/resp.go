@@ -12,6 +12,7 @@ type DishResp struct {
 	BaseMsgResp
 	Page int
 	StepInfo
+	Count int
 }
 
 //菜谱详情响应体
@@ -22,3 +23,4 @@ type DishDetailResp struct {
 	MainMaterial []string
 	SecondMaterial []string
 }
+
