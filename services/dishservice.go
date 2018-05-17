@@ -58,6 +58,7 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 
 //获取菜谱信息
 func GetDishInfo(uid,dishId int) (dishDetail models.DishDetailResp) {
+	models.AddPopular(dishId)
 	dishInfo,err := models.GetDishInfo(uid,dishId)
 	stepInfo,err := models.GetDishStep(uid,dishId)
 	mainMaterial := strings.Split(dishInfo.MainMaterial,"/")

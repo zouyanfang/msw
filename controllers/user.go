@@ -76,7 +76,30 @@ func (this *UserController)ReleaseTalk(){
 	}
 	resp = services.ReleaseDishTalk(dishid,this.User.Id,content)
 	return
-
 }
 
+//用户收藏菜谱
+func (this *UserController)UserCollection(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if this.User == nil {
+		resp.Msg = "请先登录！"
+		return
+	}
+	dishid,err := this.GetInt("dishid")
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	status,err := this.GetInt("status")
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp  = services.UserDishCollect(dishid,this.User.Id,status)
+}
 

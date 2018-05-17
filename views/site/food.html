@@ -75,72 +75,19 @@
 
 			{{range $k,$v := .allDish}}
 
-			<a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-4">
+			<a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-4 sgo" >
 				<img class="img-responsive col-sm-12" src="{{$v.DishImg}}">
 				<div class="col-sm-12" >
 					<div class="col-sm-4">
 						<img src="{{$v.UserImg}}"  height="50px;" width="50px;" style="border-radius: 50px;">
 					</div>
 					<div class="col-sm-8">
-						<p class="col-sm-12">作者:{{$v.Name}}</p>
-						<p class="col-sm-12">菜名：{{$v.DishName}}</p>
+						<p class="col-sm-12">{{$v.Name}}</p>
+						<p class="col-sm-12">{{$v.DishName}}</p>
 					</div>
 				</div>
 			</a>
 			{{end}}
-				<!--
-			<div class="col-sm-4">
-				<img class="img-responsive col-sm-12" src="3.jpg">
-				<div class="col-sm-12" >
-					<div class="col-sm-4">
-						<img src="1.jpg"  height="50px;" width="50px;" style="border-radius: 50px;">
-					</div>
-					<div class="col-sm-8">
-						<p class="col-sm-12">作者:hxy</p>
-						<p class="col-sm-12">菜名：cookie</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<img class="img-responsive col-sm-12" src="3.jpg">
-				<div class="col-sm-12" >
-					<div class="col-sm-4">
-						<img src="1.jpg"  height="50px;" width="50px;" style="border-radius: 50px;">
-					</div>
-					<div class="col-sm-8">
-						<p class="col-sm-12">作者:hxy</p>
-						<p class="col-sm-12">菜名：cookie</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<img class="img-responsive col-sm-12" src="3.jpg">
-				<div class="col-sm-12" >
-					<div class="col-sm-4">
-						<img src="1.jpg"  height="50px;" width="50px;" style="border-radius: 50px;">
-					</div>
-					<div class="col-sm-8">
-						<p class="col-sm-12">作者:hxy</p>
-						<p class="col-sm-12">菜名：cookie</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<img class="img-responsive col-sm-12" src="3.jpg">
-				<div class="col-sm-12" >
-					<div class="col-sm-4">
-						<img src="1.jpg"  height="50px;" width="50px;" style="border-radius: 50px;">
-					</div>
-					<div class="col-sm-8">
-						<p class="col-sm-12">作者:hxy</p>
-						<p class="col-sm-12">菜名：cookie</p>
-					</div>
-				</div>
-			</div>
-			-->
 			<div class="cpntainer">
 				<div class="col-sm-12">
 					<ul class="pager">
@@ -152,3 +99,15 @@
 		</div>
 	</div>	
 <script src="../static/js/food.js"></script>
+<script type="text/javascript">
+    $(function () {
+        init()
+    })
+    function init(){
+        console.log("2.    "+"&#x559C")
+    }
+
+    $("sgo").hover(function(){
+
+	})
+</script>

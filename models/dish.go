@@ -96,7 +96,7 @@ func GetAllDishList(startIndex, pageSize int, condition string, paras []interfac
 //菜谱大全/获取菜谱详情
 
 func GetDishInfo(uid,dishId int)(dishInfo *DishInfo,err error)  {
-	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,d.dish_name,
+	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,d.dish_name,d.popular_count,d.collect_count,
 			d.tasty,d.dish_system
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
@@ -139,5 +139,13 @@ func InsertTalk(dishId,uid int,content string)(err error){
 	sql := `INSERT INTO dish_comment (uid,dish_id,content,comment_date) VALUES (?,?,?,NOW())`
 	_,err = orm.NewOrm().Raw(sql,uid,dishId,content).Exec()
 	return
-
 }
+
+func AddPopular(dishId int)(err error){
+	sql := `UPDATE dish SET popular_count = popular_count + 1 WHERE id = ? `
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,dishId).Exec()
+	return
+}
+
+

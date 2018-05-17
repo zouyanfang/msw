@@ -24,3 +24,8 @@ type DishDetailResp struct {
 	SecondMaterial []string
 }
 
+type UserCollectResp struct {
+	BaseMsgResp
+	Status int
+}
+

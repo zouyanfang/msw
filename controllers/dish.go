@@ -60,6 +60,17 @@ func (this *DishController)GetDishDetail(){
 		conditon += " AND "
 		paras = append(paras,dishId)
 	}
+	if this.User == nil {
+		this.Data["status"] = 0
+	}else {
+		s ,_:= models.FindUserCollection(dishId,this.User.Id)
+		if s != nil {
+			this.Data["status"] = s.Status
+		}else {
+			this.Data["status"] = 0
+		}
+
+	}
 	dishInfoResp := services.GetDishInfo(uid,dishId)
 	dishCommnet := services.GetDishComment(page,utils.PAFESIZE5,dishId)
 	this.Data["dishInfo"] = dishInfoResp.DishDetail
@@ -75,6 +86,8 @@ func (this *DishController)GetDishDetail(){
 	this.TplName = "site/foodetail.html"
 }
 
+
+//获取更多评论
 func (this *DishController)GetTalk(){
 	var resp models.DishResp
 	resp.Ret = 403
