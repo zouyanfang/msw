@@ -7,25 +7,28 @@
 	<!-- 不同页面显示的区域 -->
 	<div class="container">
 	<h3 class="text-center"><span class="glyphicon glyphicon-bullhorn"></span>Welcome to speak enthusiastically</h3>
-	<p class="text-right">一共有110条留言</p>
+	<p class="text-right">一共有{{.count}}条留言</p>
 		<div >
+			{{range $i,$v := .msg}}
 			<div class="media">
 	            <div class="media-left">
-	                <img class="media-object" src="./images/36.jpg" alt="...">
+	                <img class="media-object" src="{{$v.UserImg}}" alt="..." style="width: 50px;height: 50px;">
 	            </div>
 	            <div class="media-body">
-	                <h4 class="media-heading">linda</h4>
-	                <p>Cras sit amet nibh libero, in gr</p>
-	                <p>3楼&nbsp;&nbsp;2017-08-08&nbsp;&nbsp;23:15发表</p>
+	                <h4 class="media-heading">{{$v.Name}}</h4>
+	                <p>{{$v.Content}}</p>
+	                <p>&nbsp;&nbsp;{{$v.CreateTime}}发表</p>
 	                <hr>
 	            </div>
 	        </div>
         </div>
+		{{end}}
+		<button class="btn btn-info"> 加载更多</button>
         <div class="col-sm-8" style="margin-top: 20px;margin-bottom: 20px;">
-				<textarea class=" form-control col-sm-8" placeholder="来评论啊哈哈哈" ></textarea>
+				<textarea class=" form-control col-sm-8" placeholder="来评论啊哈哈哈" id="talk"></textarea>
 			</div>	
 			<div class="col-sm-2" style="margin-top: 40px;">
-				<button class="btn btn-info">提交</button>
+				<button class="btn btn-info" id="commit">提交</button>
 			</div>
 	</div>
 <script type="text/javascript">
@@ -35,4 +38,27 @@
 	function init() {
 		console.log("4.    "+"&#x4F60")
     }
+
+	$("#commit").click(function(){
+		var val = $("#talk").val()
+		if (val == ""){
+		    alert("评论内容不能为空")
+			return
+		}
+		$.ajax({
+			url: '/user/releaseusermsg',
+			type: 'post',
+			dataType: 'json',
+			data: {"content":val},
+			success:function(result){
+				if (result.Ret == 200){
+					alert("发布成功")
+					location.reload()
+					return
+				}else {
+					alert(result.Msg)
+				}
+			}
+		})
+	})
 </script>

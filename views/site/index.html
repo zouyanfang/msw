@@ -3,13 +3,6 @@
 <html>
 <head>
     <title></title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/css/swiper.min.css"> -->
-
-    <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.0/js/swiper.esm.bundle.js"></script> -->
 
     <link href="../static/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="../static/css/style.css" type="text/css" rel="stylesheet" media="all">
@@ -122,6 +115,10 @@
             background-color: #03a9f4ba;
             right: 110px;
         }
+
+        .sgo:hover {
+            color: orangered;
+        }
     </style>
     <style type="text/css">
         .user{
@@ -214,6 +211,10 @@
         #heart:hover {
             cursor: pointer;
         }
+
+        .actives {
+            color:black;
+        }
     </style>
 </head>
 <body style="height: 100%;">
@@ -266,9 +267,9 @@
                             <li><a href="/dish/getalldishlist" >菜谱中心</a></li>
                         {{end}}
                         {{if eq .type 3}}
-                            <li><a href="/index/menucenter" class="active">菜单中心</a></li>
+                            <li><a href="/menucenter/menucenter" class="active">菜单中心</a></li>
                         {{else}}
-                            <li><a href="/index/menucenter">菜单中心</a></li>
+                            <li><a href="/menucenter/menucenter">菜单中心</a></li>
                         {{end}}
                         {{if eq .type 4}}
                             <li><a href="/index/message" class="active">留言版</a></li>
@@ -365,7 +366,6 @@
             t.css('transform','rotateY('+n+'deg)')
         },100)
     }
-
 
 </script>
 </body>

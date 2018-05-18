@@ -3,6 +3,7 @@ package controllers
 import (
 	"msw/services"
 	"msw/utils"
+	"fmt"
 )
 
 //首页
@@ -43,12 +44,7 @@ func (this *IndexController)DishCenter (){
 	this.TplName = "site/food.html"
 }*/
 
-//菜单中心
-func (this *IndexController)MenuCenter(){
-	this.Data["type"] = 3
-	this.IsNeddTemplate()
-	this.TplName = "site/menu.html"
-}
+
 
 /*//菜谱详情
 	func (this *IndexController)FoodDetail(){
@@ -57,21 +53,33 @@ func (this *IndexController)MenuCenter(){
 	this.TplName = "site/foodetail.html"
 }*/
 
-//菜单详情
-func (this *IndexController)MenuDetail(){
-	this.Data["type"] = 3
-	this.IsNeddTemplate()
-	this.TplName = "site/menudetail.html"
-}
+
 //留言板页面
 func (this *IndexController)Message(){
 	this.Data["type"] = 4
 	this.IsNeddTemplate()
+	resp :=services.GetUserMsgList(1,utils.PAGESIZE9,"ORDER BY create_time DESC ",nil)
+	this.Data["msg"] = resp.Object
+	this.Data["count"] = resp.Count
+	this.Data["page"] = resp.Page
 	this.TplName = "site/message.html"
 }
+
+
 //查询菜单菜谱页面
 func (this *IndexController)Search(){
 	this.Data["type"] = 0
+	name := this.GetString("Search")
+	if name == ""{
+		this.Abort("404")
+	}
+	condition := "'%"+name+"%'"
+	resp := services.GetSearchResutl(condition)
+	fmt.Println(resp)
+	this.Data["status"] = resp.Status
+	this.Data["menu"] = resp.Menu
+	this.Data["dish"] = resp.Dish
 	this.IsNeddTemplate()
 	this.TplName = "site/search.html"
 }
+

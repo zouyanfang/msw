@@ -78,3 +78,29 @@ func UpdateDishNum(o orm.Ormer,dishId,status int)(error){
 	_,err := o.Raw(sql,dishId).Exec()
 	return err
 }
+
+//插入一条留言
+func  InsertUserMsg(uid int , content string)(err error){
+	sql := `INSERT INTO user_message (uid,content,create_time) VALUES (?,?,NOW())`
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,uid,content).Exec()
+	return
+}
+
+func GetUserInfoByIndex(uid int )(u User,err error){
+ 	sql := `SELECT * FROM users WHERE id = ?`
+ 	o := orm.NewOrm()
+ 	err = o.Raw(sql,uid).QueryRow(&u)
+ 	return
+}
+
+func GetUserCollectDish(uid int)(dish []Dish,err error){
+	sql := 	`SELECT * FROM dish WHERE uid = ?`
+	o := orm.NewOrm()
+	_,err =o.Raw(sql,uid).QueryRows(&dish)
+	return
+}
+
+
+
+

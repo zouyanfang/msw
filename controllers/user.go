@@ -3,7 +3,9 @@ package controllers
 import (
 	"msw/models"
 	"msw/services"
-	)
+	"msw/utils"
+	"time"
+)
 
 type UserController struct {
 	BaseController
@@ -103,3 +105,81 @@ func (this *UserController)UserCollection(){
 	resp  = services.UserDishCollect(dishid,this.User.Id,status)
 }
 
+//获取用户的菜单
+func (this *UserController)GetUserMenu(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if this.User == nil {
+		resp.Msg = "请先登入"
+		return
+	}
+	resp = services.GetUserMenu(this.User.Id)
+	return
+}
+
+func (this *UserController)AddToMenu(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func (){
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if this.User == nil {
+		resp.Msg = "请登入！"
+		return
+	}
+	dishid,err := this.GetInt("dishid")
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	menuid,err := this.GetInt("menuid")
+	resp = services.AddToMenu(menuid,dishid)
+}
+
+
+//创建菜单
+func (this *UserController)CreateNewImg(){
+	var resp models.BaseMsgResp
+	resp.Ret = 403
+	defer func (){
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if this.User == nil {
+		resp.Msg = "请先登入"
+	}
+	s,f,err := this.GetFile("img")
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	id := int(time.Now().Unix())
+	path := utils.SaveImg(s,f,id,"menu_img/")
+	path = "../static/img/menu_img"+path
+	menuname := this.GetString("menuname")
+	describe := this.GetString("describe")
+	resp = services.CreateNewMenu(this.User.Id,menuname,path,describe)
+}
+
+func (this *UserController)ReleaseUserMsg(){
+	var resp models.BaseMsgResp
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	if this.User == nil {
+		resp.Msg = "请先登入"
+		return
+	}
+	content:= this.GetString("content")
+	if content == ""{
+		resp.Msg = "评论内容为空！"
+		return
+	}
+	resp = services.ReleaseUserMsg(this.User.Id,content)
+}

@@ -4,6 +4,7 @@ import (
 	"msw/services"
 	"msw/utils"
 	"msw/models"
+	"fmt"
 )
 
 //菜谱大全
@@ -14,14 +15,16 @@ type DishController struct {
 //获取菜谱大全列表
 func (this *DishController) GetAllDishList()  {
 	page := 1
-	allDish := services.GetAllDishList(page,utils.PAFESIZE9,"ORDER BY d.popular_count DESC",nil)
-	this.Data["allDish"] = allDish.Object
+	allDish := services.GetAllDishList(page,utils.PAGESIZE9,"ORDER BY d.popular_count DESC",nil)
+	this.Data["allDish"] = allDish
 	this.Data["type"] = 2
+	this.Data["page"] = allDish.Page
 	this.IsNeddTemplate()
 	this.TplName = "site/food.html"
 }
 
 func (this *DishController) GetConditionDishList()  {
+
 	var resp models.DishResp
 	resp.Ret = 403
 	defer func() {
@@ -30,7 +33,7 @@ func (this *DishController) GetConditionDishList()  {
 	}()
 	condition := ""
 	paras := []interface{}{}
-	page,_:= this.GetInt("page",0)
+	page,_:= this.GetInt("page",1)
 	tasty:= this.GetString("tasty")
 	if tasty != "" {
 		condition += " AND d.tasty = ?"
@@ -41,8 +44,8 @@ func (this *DishController) GetConditionDishList()  {
 		condition += " AND d.dish_system = ?"
 		paras = append(paras,area)
 	}
-	resp = services.GetAllDishList(page,utils.PAFESIZE9,condition,paras)
-
+	fmt.Println(area,tasty)
+	resp = services.GetAllDishList(page,utils.PAGESIZE9,condition,paras)
 }
 
 //菜谱详情

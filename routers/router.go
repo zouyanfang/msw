@@ -14,4 +14,5 @@ func init() {
 	beego.AutoRouter(&controllers.IndexController{}) //首页展示
 	beego.AutoRouter(&controllers.DishController{}) //菜谱大全
 	beego.AutoRouter(&controllers.UserController{}) //用户中心
+	beego.AutoRouter(&controllers.MenuCenterController{})//菜单中心
 }

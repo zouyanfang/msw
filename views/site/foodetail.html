@@ -44,9 +44,6 @@
 						<ul class="list-unstyled list-inline nav-justified">
 							{{range $k,$v := .secondMaterial}}
 							<li><strong>{{$v}}</strong></li>
-							<!--<li><strong>番茄</strong></li>
-							<li><strong>土豆</strong></li>
-							<li><strong>牛肉</strong></li>-->
 							{{end}}
 						</ul>
 					</div>
@@ -131,7 +128,7 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content col-sm-8 col-sm-offset-2" style="border 1px ;border-radius: 15px 50px;">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="menuclose"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Add to Menu</h4>
       </div>
       <div class="modal-body" style="height: 150px;">
@@ -140,19 +137,14 @@
   				   <form>
           				<div class="form-group">
     						<label>请选择您要添加的菜单</label>
-  							<select class="form-control">
-								<option>1</option>
-		      					<option>2</option>
-					      		<option>3</option>
-					      		<option>4</option>
-					      		<option>5</option>
+  							<select class="form-control" id="mymenu">
 		       				</select>
           				</div>
       				</form>
       			</div>
       			<div class="col-sm-4">
       				<label>&nbsp;</label>
-      				<button class="btn btn-default col-sm-12">添加至菜单</button>
+      				<button class="btn btn-default col-sm-12" id="tomenu">添加至菜单</button>
       			</div>
       			<div class="col-sm-12">
       				<button class="btn btn-default" data-toggle="modal" data-target="#buildmenu">新建菜单</button>
@@ -176,8 +168,8 @@
         <form>	
         	<div class="row">
 		        <div class="form-group col-sm-4">
-		            <label for="file" class="control-label" id="addimg">MenuImg</label>
-		            <input type="file" id="file" class="hidden">
+		            <label for="img" class="control-label" id="addimg">MenuImg</label>
+		            <input type="file" id="img" class="hidden">
 		        </div>
 		        <div class="col-sm-8" >
 		        	<img src=""  id="showimg" style="height: 100px;width: 100px;" alt="菜单图片">
@@ -185,18 +177,18 @@
 	        </div>
 
           <div class="form-group">
-            <label for="recipient-name" class="control-label">Name:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label for="menuname" class="control-label">Name:</label>
+            <input type="text" class="form-control" id="menuname">
           </div>
           <div class="form-group">
-            <label for="message-text" class="control-label">MenuDescription:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="describe" class="control-label">MenuDescription:</label>
+            <textarea class="form-control" id="describe"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-        <button type="button" class="btn btn-primary">Create Menu</button>
+        <button type="button" class="btn btn-primary" id="createmenu">Create Menu</button>
       </div>
     </div>
   </div>
@@ -292,5 +284,59 @@
     		$("#heart").css("color","red")
     	}
     })
+
+    $("#tomenu").click(function(event) {
+    	var val = $("#mymenu").val()
+    	if (val == ""){
+    		alert("你没有选择菜单")
+    		return
+    	}
+    	$.ajax({
+    		url: '/user/addtomenu',
+    		type: 'get',
+    		dataType: 'json',
+    		data: {"dishid":{{.dishid}},'menuid':val},
+    		success:function(result){
+    			if (result.Ret == 200) {
+    				alert("添加成功")
+    				location.reload()
+    				return
+    			}
+    			alert(result.Msg)
+    		}
+    	})
+    	
+    });
+
+    $("#createmenu").click(function(){
+    	var formData = new FormData()
+    	if ($("#img").val() == ""){
+   			alert("没有选择图片")
+   			return
+  		}
+		formData.append('img',$('#img')[0].files[0])
+		if ($("#describe").val() == "" || $("#menuname").val() == ""){
+			alert("请把剩余的空填写完毕")
+			return
+		}
+		formData.append("menuname",$("#menuname").val())
+		formData.append("describe",$("#describe").val())
+		$.ajax({
+		    url: '/user/createnewimg',
+    		type: 'post',
+    		dataType: 'json',
+    		data:formData,
+    		processData:false,
+    		contentType:false,
+    		success:function(result){
+    			if (result.Ret == 200){
+    				alert("创建成功")
+    				location.reload()
+    				return
+    			}
+    			alert(result.Msg)
+    		}
+		})
+    });
 
 </script>

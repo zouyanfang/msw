@@ -72,27 +72,43 @@
 		</div>
 
 		<div class="container" >
+			<div class="dishcontent col-sm-12">
+			{{if .allDish.Object}}
+			{{range $k,$v := .allDish.Object}}
+			<a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-4 sgo" id="food">
 
-			{{range $k,$v := .allDish}}
-
-			<a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-4 sgo" >
-				<img class="img-responsive col-sm-12" src="{{$v.DishImg}}">
+				<div class="col-sm-12" style="padding: 0px;"><img class="img-responsive" src="{{$v.DishImg}}"></div>
 				<div class="col-sm-12" >
 					<div class="col-sm-4">
 						<img src="{{$v.UserImg}}"  height="50px;" width="50px;" style="border-radius: 50px;">
 					</div>
 					<div class="col-sm-8">
-						<p class="col-sm-12">{{$v.Name}}</p>
-						<p class="col-sm-12">{{$v.DishName}}</p>
+						<i class="col-sm-12">{{$v.Name}}</i>
+						<i class="col-sm-12">{{$v.DishName}}</i>
 					</div>
 				</div>
 			</a>
 			{{end}}
+			{{else}}
+			<div class="alert alert-danger col-sm-12" role="alert">
+				<strong>o(╯□╰)o</strong> 没有该搜索条件的菜单或菜谱
+			</div>
+			{{end}}
+			</div>
 			<div class="cpntainer">
-				<div class="col-sm-12">
-					<ul class="pager">
-    					<li><a href="#">Previous</a></li>
-    					<li><a href="#">Next</a></li>
+				<div class="col-sm-4 col-sm-offset-4">
+					<ul class="pager" value="">
+		 				{{if .allDish.Pref}}
+						<li class="previous" id="prev"><a href="#" value="0"><span aria-hidden="true">&larr;</span> Back</a></li>
+						{{else }}
+						<li class="previous disabled" id="prev"><a href="#" value="0"><span aria-hidden="true">&larr;</span> Back</a></li>
+						{{end}}
+						<span style="color: #39af84" id="page">{{.allDish.Page}}</span>
+						{{if .allDish.Next}}
+						<li class="next" id="next"><a href="#" value="1">Go<span aria-hidden="true">&rarr;</span></a></li>
+						{{else}}
+						<li class="next disabled" id="next"><a href="#" value="1">Go <span aria-hidden="true">&rarr;</span></a></li>
+						{{end}}
 					</ul>
 				</div>
 			</div>
@@ -110,4 +126,66 @@
     $("sgo").hover(function(){
 
 	})
+
+	$(".pager a").click(function(event){
+		if ($(this).parent().hasClass('disabled')){
+			return false
+		}
+		var page = 0
+		var value = $(this).attr("value")
+		if (value == 0){
+			page = parseInt($("#page").text())-1
+		}else {
+			page = parseInt($("#page").text())+1 
+		}
+		var area = ""
+		if ($("#condition .area")){
+			area = $("#condition .area").text()
+		}
+
+		var taste = ""
+		if ($("condition .taste")){
+			taste = $("#condition .taste").text()
+		}
+		$.ajax({
+			url: '/dish/getconditiondishlist',
+			type: 'get',
+			dataType: 'json',
+			data: {"page": page,"tasty":taste,"area":area},
+			success:function(result){
+				console.log(result)
+				if (result.Ret == 200){
+					$(".dishcontent").empty()
+					for(var i = 0;i<result.Object.length;i++){
+						var text = "<a href='/dish/getdishdetail?uid="+result.Object[i].Uid+"&dishId="+result.Object[i].Id+"' class='col-sm-4 sgo' id='food'>"+
+										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"'></div>"+
+											"<div class='col-sm-12' >"+
+										"<div class='col-sm-4'>"+
+										"<img src='"+result.Object[i].UserImg+"'  height='50px;' width='50px;' style='border-radius: 50px;'>"+
+										"</div>"+
+										"<div class='col-sm-8'>"+
+										"<i class='col-sm-12'>"+result.Object[i].Name+"</i>"+
+										"<i class='col-sm-12'>"+result.Object[i].DishName+"</i>"+
+										"</div>"+
+										"</div>"+
+									"</a>"
+						$(".dishcontent").append(text)
+					}
+					if (result.Pref){
+						$("#prev").removeClass('disabled')
+					}else{	
+						console.log(result.Pref)
+						$("#prev").addClass('disabled')
+					}
+					if(result.Next){
+						$("#next").removeClass('disabled')
+					}else{
+						$("#next").addClass('disabled')
+					}
+					$("#page").text(result.Page)
+				}
+			}
+		})
+	})
+
 </script>

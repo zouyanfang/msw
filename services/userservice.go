@@ -57,3 +57,29 @@ func UserDishCollect(dishid,uid ,status int)(resp models.BaseMsgResp){
 	resp.Ret = 200
 	return
 }
+
+//发布一条信息
+func ReleaseUserMsg(uid int,content string)(resp models.BaseMsgResp){
+	err := models.InsertUserMsg(uid,content)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+	return
+}
+
+//func GetUserInfoByIndex(uid int)(resp models.BaseMsgResp){
+//	u,err := models.GetUserInfoByIndex(uid)
+//	if err != nil {
+//		resp.Msg = err.Error()
+//		return
+//	}
+//	dish,err := models.GetUserCollectDish(uid)
+//	if err != nil {
+//		resp.Msg = err.Error()
+//		return
+//	}
+//	resp.
+//	return
+//}

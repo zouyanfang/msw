@@ -6,69 +6,38 @@
 <div class="container">
 		<div class="product-top" id="sort">
 			<h4>Menu List</h4>
-			<ul> 
+			<ul id="mytab"> 
 				<li class="dropdown head-dpdn">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Newest<span class="caret"></span></a> 
+					<a href="#" class="" value="1">Newest<span class="caret"></span></a>
 				</li>
 				<li class="dropdown head-dpdn">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">hot menu<span class="caret"></span></a> 
+					<a href="#" class="" value="0">hot menu<span class="caret"></span></a>
 				</li>
 			</ul> 
 			<div class="clearfix"> </div>
 		</div>
+
+		<div class="menucontent">
+			{{range $i,$v := .menu}}
 			<div class="col-xs-6 col-sm-4 product-grids" style="overflow: hidden;">
 				<div class="flip-container ">
 					<div class="flipper agile-products">
 						<div class="front"> 
-							<img src="images/g7.jpg" class="img-responsive" alt="img"> 
+							<img src="{{$v.MenuImg}}" class="col-sm-12" alt="img" style="height: 200px;padding: 0px;">
 						</div>
 						<div class="back">
-							<h3 style="color: white;">菜单名字</h3>
-							<p  class="text-left">菜单描述</p>
-							<h3 class="text-left" style="color: white;">Have 15 dish </h3>
-							<h3 class="text-right" style="color: white;">from--hxy</h3>
-							<a href="#" data-toggle="modal" data-target="#myModal1" >CheckOut</a>
+							<h3 style="color: white;">{{$v.MenuName}}</h3>
+							<p  class="text-left">{{$v.MenuDescribe}}</p>
+							<h3 class="text-left" style="color: white;">Have {{$v.Counts}} dish </h3>
+							<a href="./menudetail?menuid={{$v.Id}}" data-toggle="" data-target="" >CheckOut</a>
 						</div>
 					</div>
 				</div> 
 			</div>
-
-			<div class="col-xs-6 col-sm-4 product-grids" style="overflow: hidden;">
-				<div class="flip-container ">
-					<div class="flipper agile-products">
-						<div class="front"> 
-							<img src="images/g7.jpg" class="img-responsive" alt="img"> 
-						</div>
-						<div class="back">
-							<h3 style="color: white;">菜单名字</h3>
-							<p  class="text-left">菜单描述</p>
-							<h3 class="text-left" style="color: white;">Have 15 dish </h3>
-							<h3 class="text-right" style="color: white;">from--hxy</h3>
-							<a href="#" data-toggle="modal" data-target="#myModal1" >CheckOut</a>
-						</div>
-					</div>
-				</div> 
-			</div>
-
-			<div class="col-xs-6 col-sm-4 product-grids" style="overflow: hidden;">
-				<div class="flip-container ">
-					<div class="flipper agile-products">
-						<div class="front"> 
-							<img src="images/g7.jpg" class="img-responsive" alt="img"> 
-						</div>
-						<div class="back">
-							<h3 style="color: white;">菜单名字</h3>
-							<p  class="text-left">菜单描述</p>
-							<h3 class="text-left" style="color: white;">Have 15 dish </h3>
-							<h3 class="text-right" style="color: white;">from--hxy</h3>
-							<a href="#" data-toggle="modal" data-target="#myModal1" >CheckOut</a>
-						</div>
-					</div>
-				</div> 
-			</div>
-
+			{{end}}
+    	</div>
 			<div class="col-sm-12">
-				<button class="btn btn-info col-sm-4 col-sm-offset-4">查看更多</button>
+				<button class="btn btn-info col-sm-4 col-sm-offset-4" value="{{.page}}" desc="{{.desc}}" id="rice">查看更多</button>
 			</div>
 		</div>
 <script type="text/javascript">
@@ -78,4 +47,57 @@
 	function init() {
 		console.log("3.    "+"&#x6B22")
     }
+
+    $("#mytab a").click(function(){
+    	 $("#mytab a").removeClass('actives')
+    	 $(this).addClass('actives')
+    	 console.log($(this).attr("value"))
+    	 if ($(this).attr("value") == 0){
+    	 	window.location.href = "./menucenter"
+    	 }else {
+    	 	window.location.href = "./menucenter?desc="+1
+    	 }
+    });
+
+    $("#rice").click(function(){
+    	var val = $(this).attr("value")
+    	if (val == 0 ){
+    		alert("没有更多的菜单了")
+    		return
+    	}
+    	val = parseInt(val)+1
+    	var desc = $(this).attr("desc")
+    	$.ajax({
+    		url: '/menucenter/loadmoremenu',
+    		type: 'get',
+    		dataType: 'json',
+    		data: {"page": val,"desc":desc},
+    		success:function(result){
+    			if (result.Ret == 200) {
+    				for (var i = 0 ;i<result.Object.length;i++){
+    					var text = `<div class="col-xs-6 col-sm-4 product-grids" style="overflow: hidden;">
+										<div class="flip-container ">
+											<div class="flipper agile-products">
+												<div class="front">` 
+									text+=			"<img src='"+result.Object[i].MenuImg+"' class='col-sm-12' alt='img' style='height: 200px;padding: 0px;'>"+
+												"</div>"+
+												"<div class='back'>"+
+													"<h3 style='color: white;'>"+result.Object[i].MenuName+"</h3>"+
+													"<p  class='text-left'>"+result.Object[i].MenuDescribe+"</p>"+
+													"<h3 class='text-left' style='color: white;'>Have "+result.Object[i].Counts+" dish </h3>"+
+													"<a href='./menudetail?menuid="+result.Object[i].Id+"'  >CheckOut</a>"+
+												"</div>"+
+											"</div>"+
+										"</div>"+
+									"</div>"
+							$(".menucontent").append(text)
+    				}
+    				$("#rice").attr("value",result.Page)
+    				return
+    			}else {
+    				alert(result.Msg)
+    			}
+    		}
+    	})
+    })
 </script>
