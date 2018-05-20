@@ -131,7 +131,7 @@
         <div class="nav navbar navbar-static-top" style="margin-bottom: 0px;">
             <p class="navbar-text "><a href="/">首页</a></p>
             <p class="navbar-text "><a href="/dish/getalldishlist">菜谱中心</a></p>
-            <p class="navbar-text "><a href="/index/menucenter">菜单中心</a></p>
+            <p class="navbar-text "><a href="/menucenter/menucenter">菜单中心</a></p>
             <p class="navbar-text "><a href="/index/message">留言板</a></p>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -165,17 +165,17 @@
         <br>
         <div class="col-sm-12 ">
             <div class="col-sm-4 p0">
-                <img src="1.jpg" width="150px;" height="150px;" style="border-radius:150px; ">
+                <img src="{{.user.UserImg}}" width="150px;" height="150px;" style="border-radius:150px; ">
             </div>
             <div class="col-sm-7 p0">
-                <h3 class="col-sm-12 p0"><a href="" style="color: #ff6767;">不才小生</a></h3>
+                <h3 class="col-sm-12 p0"><a href="" style="color: #ff6767;">{{.user.Name}}</a></h3>
                 <div class="col-sm-12 p0">
                     <ul class="list-inline ">
                         <li class="col-sm-3 p0">
-                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>菜谱数量</span></a>
+                            <a href=""  id="sign"><span class="col-sm-12">{{.dishcount}}</span><span>菜谱数量</span></a>
                         </li>
                         <li class="col-sm-3 p0">
-                            <a href=""  id="sign"><span class="col-sm-12">0</span><span>菜单数量</span></a>
+                            <a href=""  id="sign"><span class="col-sm-12">{{.menucount}}</span><span>菜单数量</span></a>
                         </li>
                     </ul>
                 </div>

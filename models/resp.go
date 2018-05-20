@@ -61,3 +61,20 @@ type UserInfoIndexResp struct {
 	BaseMsgResp
 	Dish []Dish
 }
+
+type UserMenuResp struct {
+	BaseMsgResp
+	Menu []Menu
+	CollectMenu []Menu
+}
+
+type UserDishResp struct {
+	BaseMsgResp
+	Dish []Dish
+	CollectDish []Dish
+}
+
+type CreateDishResp struct {
+	BaseMsgResp
+	Id int
+}

@@ -131,3 +131,52 @@ func GetMenuByVague(condition string)(menu []Menu,err error){
 	_, err = o.Raw(sql).QueryRows(&menu)
 	return
 }
+
+func FindMenuIsExits(menuid,uid int,o orm.Ormer)(count int,err error){
+	sql := `SELECT COUNT(1) FROM user_collection WHERE uid = ? AND menu_id = ?`
+	err = o.Raw(sql,uid,menuid).QueryRow(&count)
+	return
+}
+//收藏菜单
+func CollectMenu(menuid ,uid int,o orm.Ormer)(err error){
+	sql := `INSERT INTO user_collection (uid,menu_id,collect_time,status) VALUES (?,?,NOW(),1)`
+	_,err = o.Raw(sql,uid,menuid).Exec()
+	return
+}
+
+//更新菜单状态
+func UPDATEMenuCollection(uid,menuid,status int,o orm.Ormer)(err error){
+	sql := 	`UPDATE user_collection SET status = ? WHERE uid = ? AND menu_id = ?`
+	_,err = o.Raw(sql,status,uid,menuid).Exec()
+	fmt.Println(sql,status)
+	return
+}
+
+func GetMenuStatus(menuid,uid int)(status int,err error){
+	sql := `SELECT status FROM user_collection WHERE uid = ? AND menu_id = ?`
+	o := orm.NewOrm()
+	err = o.Raw(sql,uid,menuid).QueryRow(&status)
+	fmt.Println(sql,uid,menuid)
+	return
+}
+
+func GetMenuListByUid(uid int)(menu []Menu,err error){
+	sql := `SELECT * FROM menu WHERE uid = ? ORDER BY create_date DESC`
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,uid).QueryRows(&menu)
+	return
+}
+
+func GetMenuCollectListByUid(uid int)(menu []Menu,err error){
+	sql := 	`SELECT * FROM menu m LEFT JOIN user_collection uc ON m.id = uc.menu_id WHERE uc.uid = ? AND uc.status=1 ORDER BY uc.collect_time DESC`
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,uid).QueryRows(&menu)
+	return
+}
+
+func IsUserMenu(menuid,uid int)(count int,err error){
+	sql := `SELECT COUNT(1) FROM menu WHERE id = ? AND uid = ?`
+	o := orm.NewOrm()
+	err = o.Raw(sql,menuid,uid).QueryRow(&count)
+	return
+}

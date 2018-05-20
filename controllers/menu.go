@@ -52,6 +52,7 @@ func (this *MenuCenterController)LoadMoreMenu(){
 
 //菜单详情
 func (this *MenuCenterController)MenuDetail(){
+	fmt.Print("woshiqdknlnkjlkjvnkja")
 	this.Data["type"] = 3
 	menuid ,_ := this.GetInt("menuid")
 	resp := services.GetMenuDetatil(menuid)
@@ -59,6 +60,15 @@ func (this *MenuCenterController)MenuDetail(){
 	this.Data["menu"] = resp.Object
 	this.Data["name"] = resp.Name
 	this.Data["img"] = resp.Img
+	fmt.Println("我去是")
+	if this.User == nil {
+		this.Data["status"] = 0
+		fmt.Println("123123")
+	}else {
+		status ,_:= models.GetMenuStatus(menuid,this.User.Id)
+		this.Data["status"] = status
+
+	}
 	this.IsNeddTemplate()
 	this.TplName = "site/menudetail.html"
 }

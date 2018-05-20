@@ -121,3 +121,13 @@ func GetDishComment(page,pageSize ,dishId int) (resp models.DishResp)  {
 }
 
 
+func CreateNewDish(uid int,dishname string,dishimg string,describe string)(resp models.CreateDishResp){
+	err := models.CreateDish(uid,dishname,dishimg,describe)
+	if err != nil {
+		resp.Msg = err.Error()
+	}
+	id,_ := models.GetLastDish()
+	resp.Id = id
+	resp.Ret = 200
+	return
+}

@@ -3,6 +3,7 @@ package services
 import (
 	"msw/models"
 	"github.com/astaxie/beego/orm"
+	"fmt"
 )
 
 //发布菜谱评论
@@ -22,7 +23,7 @@ func ReleaseDishTalk(dish_id,uid int,content string)(resp models.BaseMsgResp){
 	return
 }
 
-//用户收藏菜单
+//用户收藏菜谱
 func UserDishCollect(dishid,uid ,status int)(resp models.BaseMsgResp){
 	o := orm.NewOrm()
 	defer func (){
@@ -83,3 +84,115 @@ func ReleaseUserMsg(uid int,content string)(resp models.BaseMsgResp){
 //	resp.
 //	return
 //}
+
+//用户收藏菜单
+func  UserMenuCollect(menu_id,uid ,status int)(resp models.BaseMsgResp){
+	o := orm.NewOrm()
+	defer func (){
+		fmt.Println(resp.Msg)
+		if resp.Msg != ""{
+			o.Rollback()
+			return
+		}
+		o.Commit()
+	}()
+	exist,err:= models.FindMenuIsExits(menu_id,uid,o)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	if exist == 0{
+		err := models.CollectMenu(menu_id,uid,o)
+		if err != nil {
+			resp.Msg = err.Error()
+			return
+		}
+		resp.Ret = 200
+		return
+	}
+	err = models.UPDATEMenuCollection(uid,menu_id,status,o)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+	return
+}
+
+func GetMenuListByUid(uid int)(resp models.UserMenuResp){
+	m ,err := models.GetMenuListByUid(uid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	fmt.Println("12312313:",m)
+	mc ,err := models.GetMenuCollectListByUid(uid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.CollectMenu = mc
+	resp.Menu = m
+	resp.Ret = 200
+	return
+}
+
+func DeleteMenu(menuid int,uid int)(resp models.BaseMsgResp){
+	count ,err := models.IsUserMenu(menuid,uid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	if count == 0 {
+		resp.Msg = "你没有该权限删除菜单"
+		return
+	}
+	err = models.DeleteMenu(menuid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+	return
+}
+
+func ModifyUserByUid(uid int, condition string,paras interface{} )(resp models.BaseMsgResp){
+	if condition == ""{
+		resp.Msg = "没有更新的内容"
+		return
+	}
+	err := models.ModifyUserBaseMsg(uid,condition,paras)
+	if err != nil{
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+	return
+}
+
+func GetUserDish(uid int)(resp models.UserDishResp){
+	collectdish,err := models.GetUserCollectDish(uid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.CollectDish = collectdish
+	dish ,err := models.GetMyDish(uid)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Dish = dish
+	resp.Ret = 200
+	return
+}
+
+func UpdateDishDetail(dishid int,taste,system string,main ,second string)(resp models.BaseMsgResp){
+	err := models.UpdateDish(dishid,taste,system,main,second)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+	return
+}

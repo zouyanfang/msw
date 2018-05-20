@@ -6,24 +6,26 @@
     </ul>
     <div class="main">
         <div class="col-sm-12 t" style="margin-top: 20px;" id="mydish" >
+        {{ range $i,$v := .menu.Menu}}
             <div  class="col-sm-12 mycollectmenu" >
                 <div class="col-sm-10">
-                    <p class="text-left">menu-name</p>
-                    <p class="text-left">menu-description</p>
-                    <p class="text-left">release-day</p>
+                    <p class="text-left">{{$v.MenuName}}</p>
+                    <p class="text-left">{{$v.MenuDescribe}}</p>
+                    <p class="text-left">{{$v.CreateDate}}</p>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default col-sm-7" style="margin-top: 10px;">进入菜单</button>
-                    <button class="btn btn-default col-sm-7" style="margin-top: 10px;margin-bottom: 10px;">删除菜单</button>
+                    <button class="btn btn-default col-sm-7 gomenu" style="margin-top: 10px;" value="{{$v.Id}}">进入菜单</button>
+                    <button class="btn btn-default col-sm-7 deletemenu" style="margin-top: 10px;margin-bottom: 10px;" value="{{$v.Id}}">删除菜单</button>
                 </div>
             </div>
+            {{end}}
         </div>
         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="releasedish">
             <form>
                 <div class="row">
                     <div class="form-group col-sm-4">
-                        <label for="file" class="control-label" id="addimg">MenuImg</label>
-                        <input type="file" id="file" class="hidden">
+                        <label for="img" class="control-label" id="addimg">MenuImg</label>
+                        <input type="file" id="img" class="hidden">
                     </div>
                     <div class="col-sm-8" >
                         <img src=""  id="showimg" style="height: 100px;width: 100px;" alt="菜单图片">
@@ -31,28 +33,30 @@
                 </div>
 
                 <div class="form-group ">
-                    <label for="recipient-name" class="control-label">Name:</label>
-                    <input type="text" class="form-control" id="recipient-name">
+                    <label for="menuname" class="control-label">Name:</label>
+                    <input type="text" class="form-control" id="menuname">
                 </div>
                 <div class="form-group">
-                    <label for="message-text" class="control-label">MenuDescription:</label>
-                    <textarea class="form-control" id="message-text"></textarea>
+                    <label for="describe" class="control-label">MenuDescription:</label>
+                    <textarea class="form-control" id="describe"></textarea>
                 </div>
-                <button class="btn btn-default">发布菜单</button>
+                <button class="btn btn-default" id="createmenu">发布菜单</button>
             </form>
         </div>
         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="collectdish">
+            {{range $i,$v := .menu.CollectMenu}}
             <div  class="col-sm-12 mycollectmenu" >
                 <div class="col-sm-10">
-                    <p class="text-left">menu-name</p>
-                    <p class="text-left">menu-description</p>
-                    <p class="text-left">release-day</p>
+                    <p class="text-left">{{$v.MenuName}}</p>
+                    <p class="text-left">{{$v.MenuDescribe}}</p>
+                    <p class="text-left">{{$v.CreateDate}}</p>
                 </div>
                 <div class="col-sm-2">
-                    <button class="btn btn-default col-sm-7" style="margin-top: 10px;">进入菜单</button>
-                    <button class="btn btn-default col-sm-7" style="margin-top: 10px;margin-bottom: 10px;">取消收藏</button>
+                    <button class="btn btn-default col-sm-7 gomenu" style="margin-top: 10px;" value="{{$v.Id}}">进入菜单</button>
+                    <button class="btn btn-default col-sm-7 cancel" style="margin-top: 10px;margin-bottom: 10px;" value="{{$v.Id}}">取消收藏</button>
                 </div>
             </div>
+            {{end}}
         </div>
     </div>
 </div>
@@ -75,7 +79,7 @@
         $(this).addClass("active")
     })
 
-        $("#file").change(function(){
+        $("#img").change(function(){
         imgPreview()
         console.log("123123123edflasdjfliJWN")
     })
@@ -89,7 +93,7 @@
         }
 
         //获取文件
-        var file = $("#file")[0].files[0];
+        var file = $("#img")[0].files[0];
         var imageType = /^image\//;
         //是否是图片
         if (!imageType.test(file.type)) {
@@ -107,8 +111,80 @@
         };
     }
 
-    $("#file").change(function(){
+    $("#img").change(function(){
         imgPreview()
     })
 
+    $("#createmenu").click(function(){
+        var formData = new FormData()
+        if ($("#img").val() == ""){
+            alert("没有选择图片")
+            return
+        }
+        formData.append('img',$('#img')[0].files[0])
+        if ($("#describe").val() == "" || $("#menuname").val() == ""){
+            alert("请把剩余的空填写完毕")
+            return
+        }
+        formData.append("menuname",$("#menuname").val())
+        formData.append("describe",$("#describe").val())
+        $.ajax({
+            url: '/user/createnewimg',
+            type: 'post',
+            dataType: 'json',
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function(result){
+                if (result.Ret == 200){
+                    alert("创建成功")
+                    location.reload()
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
+    });
+
+    $(".gomenu").click(function () {
+        var id = $(this).attr("value")
+        window.location.href = "/menucenter/menudetail?menuid="+id
+    })
+
+    $(".deletemenu").click(function () {
+        var id = $(this).attr("value")
+        var o = $(this)
+        $.ajax({
+            url :"/user/deletemenu",
+            type:"post",
+            dataType:"json",
+            data:{"menuid":id},
+            success:function (result) {
+                if (result.Ret == 200){
+                    o.parent().parent().remove()
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
+    })
+
+    $(".cancel").click(function () {
+        var p = $(this)
+        var id = p.attr("value")
+        $.ajax({
+            url: '/user/usercollectionmenu',
+            type: 'post',
+            dataType: 'json',
+            data: {"status": 0, "menuid": id},
+            success: function (result) {
+                console.log(result)
+                if (result.Ret == 200){
+                    p.parent().parent().remove()
+                    return
+                }
+                alert(result)
+            }
+        })
+    })
 </script>

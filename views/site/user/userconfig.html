@@ -7,21 +7,21 @@
            <form class="col-sm-6">
                <div class="form-group ">
                     <label >姓名</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="name">
                </div>
                <div class="form-group ">
                    <label >头像</label>
-                   <input type="file" class="form-control">
+                   <input type="file" class="form-control" id="file">
                </div>
                <label>密码修改</label>
                <div class="form-group">                   
-                   原始密码：<input type="password" name="" class="form-control">
-                   新密码：<input type="password" name="" class="form-control">
+                   原始密码：<input type="password" name="" class="form-control" id="oldpwd">
+                   新密码：<input type="password" name="" class="form-control" id="pwd">
                </div>
            </form>
            <div class="col-sm-12">
                 <div class="col-sm-6">
-                    <button class="btn btn-default col-sm-6 pull-right">提交</button>
+                    <button class="btn btn-default col-sm-6 pull-right" id="commit">提交</button>
                 </div>
            </div>
         </div>
@@ -44,5 +44,38 @@
     $("#mynav li").click(function () {
         $("#mynav li").removeClass("active")
         $(this).addClass("active")
+    })
+
+    $("#commit").click(function () {
+        var formData = new FormData()
+        var name = $("#name").val()
+        var file = $('#file')[0].files[0]
+        console.log(file)
+        var status = 0
+        if (file){
+            status = 1
+        }
+        var old = $("#oldpwd").val()
+        var pwd = $("#pwd").val()
+        formData.append("status",status)
+        formData.append("old",old)
+        formData.append("file",file)
+        formData.append("pwd",pwd)
+        formData.append("name",name)
+        $.ajax({
+            url:"/user/modifybasemsg",
+            type:"post",
+            dataType:"json",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function (result) {
+                if (result.Ret == 200 ){
+                    location.reload()
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
     })
 </script>

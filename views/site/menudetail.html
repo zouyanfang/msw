@@ -23,7 +23,11 @@
 					<p>菜谱 ：{{.menu.Counts}}</p>
 				</div>
 				<div class="col-sm-12">
-					<button class="btn btn-defalut" style="background-color: #f71d16;color:white;">收藏该菜单</button>
+					{{if eq .status 0}}
+					<button class="btn btn-defalut" style="background-color: #f71d16;color:white;" value="1" id="collect">收藏该菜单</button>
+					{{else if eq .status 1}}
+					<button class="btn btn-defalut" style="background-color: #f71d16;color:white;" value="0" id="collect">取消收藏</button>
+                    {{end}}
 				</div>
 			</div>
 		</div>
@@ -46,6 +50,31 @@
 
 
 	<script type="text/javascript">
-		$()
+		$("#collect").click(function(){
+		    var status = $(this).attr("value")
+			var collect = $("#collect")
+			$.ajax({
+                url: '/user/usercollectionmenu',
+                type: 'post',
+                dataType: 'json',
+                data: {"status":status,"menuid":{{.menu.Id}}},
+				success:function (result) {
+					if (result.Ret == 200){
+						if (status == 1){
+                            collect.attr("value",0)
+                            collect.text("取消收藏")
+							console.log("123123123")
+						}else{
+                            collect.attr("value",1)
+                            collect.text("收藏该菜单")
+							console.log("qweqweqwew")
+						}
+						return
+					}
+					alert(result.Msg)
+                }
+                }
+            )
+		})
 	</script>
 	

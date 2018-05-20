@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"fmt"
 )
 
 type User struct {
@@ -87,20 +88,93 @@ func  InsertUserMsg(uid int , content string)(err error){
 	return
 }
 
-func GetUserInfoByIndex(uid int )(u User,err error){
- 	sql := `SELECT * FROM users WHERE id = ?`
- 	o := orm.NewOrm()
- 	err = o.Raw(sql,uid).QueryRow(&u)
- 	return
-}
-
 func GetUserCollectDish(uid int)(dish []Dish,err error){
-	sql := 	`SELECT * FROM dish WHERE uid = ?`
+	sql := 	`SELECT d.* FROM dish d  LEFT JOIN  user_collection uc ON d.id = uc.dish_id WHERE uc.uid = ? AND status = 1`
 	o := orm.NewOrm()
 	_,err =o.Raw(sql,uid).QueryRows(&dish)
+	fmt.Println(sql)
 	return
 }
 
+func GetMyDish(uid int)(dish []Dish,err error){
+	sql := `SELECT * FROM dish WHERE uid = ? `
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,uid).QueryRows(&dish)
+	return
+}
 
+func DeleteMenu(menuid int)(err error){
+	o := orm.NewOrm()
+	defer func (){
+		if err != nil {
+			o.Rollback()
+			return
+		}
+		o.Commit()
+	}()
+	sql := `DELETE FROM menu WHERE id = ?`
+	_,err = o.Raw(sql,menuid).Exec()
+	if err != nil {
+		return
+	}
+	sql = "DELETE FROM menu_dish WHERE menu_id = ? "
+	_,err = o.Raw(sql,menuid).Exec()
+	if err != nil{
+		return
+	}
+	sql = "DELETE FROM user_collection WHERE menu_id = ?"
+	_,err = o.Raw(sql,menuid).Exec()
+	if err != nil {
+		return
+	}
+	return
+}
 
+func GetDishCountByUid(uid int)(count int){
+	sql := `SELECT COUNT(1) FROM dish WHERE uid = ?`
+	o := orm.NewOrm()
+	o.Raw(sql,uid).QueryRow(&count)
+	return
+}
+
+func GetMenuCountByUid(uid int)(count int){
+	sql := `SELECT COUNT(1) FROM menu WHERE uid = ?`
+	o := orm.NewOrm()
+	o.Raw(sql,uid).QueryRow(&count)
+	return
+}
+
+func ModifyUserBaseMsg(uid int,condition string,paras interface{})(err error){
+	sql := `UPDATE users `
+	if condition != ""{
+		sql += condition
+	}
+	sql += "WHERE id = ?"
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,paras,uid).Exec()
+	fmt.Println(sql,uid)
+	return
+}
+
+func CreateDish(uid int,dishname,dishimg,describe string)(err error){
+	sql := `INSERT INTO dish (uid,dish_name,dish_img,release_date,release_role,dish_describe) VALUES (?,?,?,NOW(),2,?)`
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,uid,dishname,dishimg,describe).Exec()
+	fmt.Println(sql,uid,dishname,dishimg,describe,err)
+	return
+}
+
+func GetLastDish()(id int,err error){
+	sql := `SELECT id FROM dish ORDER BY id DESC LIMIT 0,1`
+	o := orm.NewOrm()
+	err = o.Raw(sql).QueryRow(&id)
+	return
+}
+
+func UpdateDish(dishid int,taste,system string,main ,second string)(err error){
+	sql := `UPDATE dish SET main_material = ?,second_material = ?,tasty = ?,dish_system = ? WHERE id = ?`
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,main,second,taste,system,dishid).Exec()
+	return
+}
 

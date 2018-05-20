@@ -165,3 +165,25 @@ func GetStepByDish(dishId int )(info []StepInfo,err error){
 	_,err = o.Raw(sql,dishId).QueryRows(&info)
 	return
 }
+
+func InsertDishStep(dishid ,step int,stepdescribe string)(err error){
+	sql := `INSERT INTO dish_step (dish_id,step,step_describe) VALUES (?,?,?)`
+	o:= orm.NewOrm()
+	_,err = o.Raw(sql,dishid,step,stepdescribe).Exec()
+	return
+}
+
+func InsertImgstep(dishid int,stepimg string)(err error){
+	sql := `UPDATE dish_step SET step_img = ? WHERE dish_id = ?  `
+	o := orm.NewOrm()
+	_,err = o.Raw(sql,stepimg,dishid).Exec()
+	fmt.Println(sql)
+	return
+}
+
+func GetStepImg(dishId int)(img string){
+	sql := `SELECT step_img FROM dish_step WHERE dish_id = ? `
+	o := orm.NewOrm()
+	o.Raw(sql,dishId).QueryRow(&img)
+	return
+}
