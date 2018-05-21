@@ -40,7 +40,7 @@
                     <label for="describe" class="control-label">MenuDescription:</label>
                     <textarea class="form-control" id="describe"></textarea>
                 </div>
-                <button class="btn btn-default" id="createmenu">发布菜单</button>
+                <button class="btn btn-default" id="createmenu" type="button">发布菜单</button>
             </form>
         </div>
         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="collectdish">
@@ -119,15 +119,16 @@
         var formData = new FormData()
         if ($("#img").val() == ""){
             alert("没有选择图片")
-            return
+            return false
         }
         formData.append('img',$('#img')[0].files[0])
         if ($("#describe").val() == "" || $("#menuname").val() == ""){
             alert("请把剩余的空填写完毕")
-            return
+            return false
         }
         formData.append("menuname",$("#menuname").val())
         formData.append("describe",$("#describe").val())
+        console.log("23qdjnLNFDKASDBFLAIBHVDHSKLBKJB")
         $.ajax({
             url: '/user/createnewimg',
             type: 'post',
@@ -139,7 +140,7 @@
                 if (result.Ret == 200){
                     alert("创建成功")
                     location.reload()
-                    return
+                    return false
                 }
                 alert(result.Msg)
             }
@@ -162,7 +163,7 @@
             success:function (result) {
                 if (result.Ret == 200){
                     o.parent().parent().remove()
-                    return
+                    return false
                 }
                 alert(result.Msg)
             }
@@ -181,10 +182,11 @@
                 console.log(result)
                 if (result.Ret == 200){
                     p.parent().parent().remove()
-                    return
+                    return false
                 }
                 alert(result)
             }
         })
     })
+
 </script>

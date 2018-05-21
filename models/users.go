@@ -178,3 +178,10 @@ func UpdateDish(dishid int,taste,system string,main ,second string)(err error){
 	return
 }
 
+func CountStep(dishid int,)(count int,err error){
+	sql := `SELECT COUNT(1) FROM dish_step  WHERE dish_id = ? AND step_img is NULL `
+	o := orm.NewOrm()
+	err = o.Raw(sql,dishid).QueryRow(&count)
+	return
+}
+

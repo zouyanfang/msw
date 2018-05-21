@@ -105,7 +105,7 @@ func GetAllDishList(startIndex, pageSize int, condition string, paras []interfac
 
 func GetDishInfo(uid, dishId int) (dishInfo *DishInfo, err error) {
 	sql := `SELECT d.uid,u.user_img,u.name,d.dish_img,d.main_material,d.second_material,d.dish_name,d.popular_count,d.collect_count,
-			d.tasty,d.dish_system
+			d.tasty,d.dish_system,d.dish_describe
 			FROM dish d
 			LEFT JOIN users u ON d.uid = u.id
 			WHERE d.uid = ? AND d.id = ? `
@@ -160,7 +160,7 @@ func AddPopular(dishId int) (err error) {
 
 
 func GetStepByDish(dishId int )(info []StepInfo,err error){
-	sql := `SELECT  * FROM dish_step WHERE dish_id = ?`
+	sql := `SELECT  * FROM dish_step WHERE dish_id = ? ORDER BY step `
 	o := orm.NewOrm()
 	_,err = o.Raw(sql,dishId).QueryRows(&info)
 	return
@@ -173,17 +173,34 @@ func InsertDishStep(dishid ,step int,stepdescribe string)(err error){
 	return
 }
 
-func InsertImgstep(dishid int,stepimg string)(err error){
-	sql := `UPDATE dish_step SET step_img = ? WHERE dish_id = ?  `
+func InsertImgstep(dishid int,stepimg string,step int)(err error){
+	sql := `UPDATE dish_step SET step_img = ? WHERE dish_id = ? AND step = ? `
 	o := orm.NewOrm()
-	_,err = o.Raw(sql,stepimg,dishid).Exec()
-	fmt.Println(sql)
+	_,err = o.Raw(sql,stepimg,dishid,step).Exec()
+	fmt.Println(sql,stepimg,dishid,step)
 	return
 }
 
-func GetStepImg(dishId int)(img string){
-	sql := `SELECT step_img FROM dish_step WHERE dish_id = ? `
+
+func GetImg(dishId int)(StepImg []string ,err error){
+	sql := `SELECT step_img FROM dish_step WHERE dish_id = ? AND step_img is not NULL`
 	o := orm.NewOrm()
-	o.Raw(sql,dishId).QueryRow(&img)
+	o.Raw(sql,dishId).QueryRows(&StepImg)
 	return
 }
+
+func GetCountImg(dishId int)(count int){
+	sql := `SELECT COUNT(1) FROM dish_step WHERE dish_id = ?`
+	o := orm.NewOrm()
+	o.Raw(sql,dishId).QueryRow(&count)
+	return
+}
+
+func UpdateRight(dishid int,img string,step int)(){
+	sql := `UPDATE dish_step SET step_img =? WHERE dish_id = ? AND step = ?`
+	o := orm.NewOrm()
+	o.Raw(sql,img,dishid,step).Exec()
+	fmt.Println("升级图片位置",sql,dishid,img,step)
+	return
+}
+
