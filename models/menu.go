@@ -161,14 +161,14 @@ func GetMenuStatus(menuid,uid int)(status int,err error){
 }
 
 func GetMenuListByUid(uid int)(menu []Menu,err error){
-	sql := `SELECT * FROM menu WHERE uid = ? ORDER BY create_date DESC`
+	sql := `SELECT * FROM menu WHERE uid = ? ORDER BY id DESC`
 	o := orm.NewOrm()
 	_,err = o.Raw(sql,uid).QueryRows(&menu)
 	return
 }
 
 func GetMenuCollectListByUid(uid int)(menu []Menu,err error){
-	sql := 	`SELECT * FROM menu m LEFT JOIN user_collection uc ON m.id = uc.menu_id WHERE uc.uid = ? AND uc.status=1 ORDER BY uc.collect_time DESC`
+	sql := 	`SELECT m.* FROM menu m LEFT JOIN user_collection uc ON m.id = uc.menu_id WHERE uc.uid = ? AND uc.status=1 ORDER BY uc.collect_time DESC`
 	o := orm.NewOrm()
 	_,err = o.Raw(sql,uid).QueryRows(&menu)
 	return

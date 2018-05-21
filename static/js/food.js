@@ -41,7 +41,7 @@
 					if (result.Object != null){
 						for(var i = 0;i<result.Object.length;i++){
 							var text = "<a href='/dish/getdishdetail?uid="+result.Object[i].Uid+"&dishId="+result.Object[i].Id+"' class='col-sm-4 sgo' id='food'>"+
-											"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"'></div>"+
+											"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"' style='height: 300px;'></div>"+
 												"<div class='col-sm-12' >"+
 											"<div class='col-sm-4'>"+
 											"<img src='"+result.Object[i].UserImg+"'  height='50px;' width='50px;' style='border-radius: 50px;'>"+
@@ -109,7 +109,7 @@
 					if (result.Object != null){
 					for(var i = 0;i<result.Object.length;i++){
 						var text = "<a href='/dish/getdishdetail?uid="+result.Object[i].Uid+"&dishId="+result.Object[i].Id+"' class='col-sm-4 sgo' id='food'>"+
-										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"'></div>"+
+										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"' style='height: 300px;'></div>"+
 											"<div class='col-sm-12' >"+
 										"<div class='col-sm-4'>"+
 										"<img src='"+result.Object[i].UserImg+"'  height='50px;' width='50px;' style='border-radius: 50px;'>"+
@@ -171,7 +171,7 @@
 					if (result.Object != null){
 					for(var i = 0;i<result.Object.length;i++){
 						var text = "<a href='/dish/getdishdetail?uid="+result.Object[i].Uid+"&dishId="+result.Object[i].Id+"' class='col-sm-4 sgo' id='food'>"+
-										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"'></div>"+
+										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"' style='height: 300px;'></div>"+
 											"<div class='col-sm-12' >"+
 										"<div class='col-sm-4'>"+
 										"<img src='"+result.Object[i].UserImg+"'  height='50px;' width='50px;' style='border-radius: 50px;'>"+
@@ -288,7 +288,7 @@ $(document).on('click', '.todelete', function(event) {
 					if (result.Object != null){
 					for(var i = 0;i<result.Object.length;i++){
 						var text = "<a href='/dish/getdishdetail?uid="+result.Object[i].Uid+"&dishId="+result.Object[i].Id+"' class='col-sm-4 sgo' id='food'>"+
-										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"'></div>"+
+										"<div class='col-sm-12' style='padding: 0px;'><img class='img-responsive' src='"+result.Object[i].DishImg+"' style='height: 300px;'></div>"+
 											"<div class='col-sm-12' >"+
 										"<div class='col-sm-4'>"+
 										"<img src='"+result.Object[i].UserImg+"'  height='50px;' width='50px;' style='border-radius: 50px;'>"+

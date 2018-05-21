@@ -87,6 +87,7 @@ func ReleaseUserMsg(uid int,content string)(resp models.BaseMsgResp){
 
 //用户收藏菜单
 func  UserMenuCollect(menu_id,uid ,status int)(resp models.BaseMsgResp){
+	fmt.Println("menuid",menu_id)
 	o := orm.NewOrm()
 	defer func (){
 		fmt.Println(resp.Msg)
@@ -98,13 +99,14 @@ func  UserMenuCollect(menu_id,uid ,status int)(resp models.BaseMsgResp){
 	}()
 	exist,err:= models.FindMenuIsExits(menu_id,uid,o)
 	if err != nil {
-		resp.Msg = err.Error()
+		resp.Msg = err.Error()+"123123"
 		return
 	}
 	if exist == 0{
+		fmt.Println("2131313")
 		err := models.CollectMenu(menu_id,uid,o)
 		if err != nil {
-			resp.Msg = err.Error()
+			resp.Msg = err.Error()+"456"
 			return
 		}
 		resp.Ret = 200
@@ -112,7 +114,7 @@ func  UserMenuCollect(menu_id,uid ,status int)(resp models.BaseMsgResp){
 	}
 	err = models.UPDATEMenuCollection(uid,menu_id,status,o)
 	if err != nil {
-		resp.Msg = err.Error()
+		resp.Msg = err.Error()+"789"
 		return
 	}
 	resp.Ret = 200
@@ -120,6 +122,7 @@ func  UserMenuCollect(menu_id,uid ,status int)(resp models.BaseMsgResp){
 }
 
 func GetMenuListByUid(uid int)(resp models.UserMenuResp){
+	//获取我的菜单
 	m ,err := models.GetMenuListByUid(uid)
 	if err != nil {
 		resp.Msg = err.Error()

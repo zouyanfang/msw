@@ -7,6 +7,7 @@ import (
 	"time"
 	"fmt"
 	"strings"
+	"sync"
 )
 
 type UserController struct {
@@ -214,7 +215,7 @@ func (this *UserController)UserCollectionMenu(){
 	}
 	menuid,err := this.GetInt("menuid")
 	if err != nil {
-		resp.Msg = err.Error()
+		resp.Msg = err.Error()+"adsasdasdsad"
 		return
 	}
 	status,err := this.GetInt("status")
@@ -342,35 +343,57 @@ func (this *UserController)UpdateDishStep(){
 	dishid,_ := this.GetInt("dishid")
 	str := strings.Split(desc,"/")
 	fmt.Println(str)
-	j := 0
-	for i:=1;i<= step;i++{
-		if len(str)-1 < j {
+	j := step-1
+	fmt.Println("j",j)
+	for i:=step;i>= 1;i--{
+		if  j<0 {
 			break;
 		}
 		err := models.InsertDishStep(dishid,i,str[j])
+		fmt.Println("i:",i,"str",str[j])
 		if err != nil {
 			resp.Msg = err.Error()
 			return
 		}
-		j++
+		j--
 	}
 	resp.Ret = 200
 }
 
-func (this *UserController)GetStepImg(){
+var l sync.RWMutex
 
+var Step int
+
+func (this *UserController)GetStepImg(){
 	s,f,err := this.GetFile("file")
 	if err != nil {
-		//resp.Msg = err.Error()
 		return
 	}
+	//该方法只能被一个线程访问
+	l.Lock()
 	id := int(time.Now().Unix())
-	path := utils.SaveImg(s,f,id,"user_img")
+	time.Sleep(1*time.Second)
+	fmt.Println("过一秒")
+	path := utils.SaveImg(s,f,id,"step/")
 	path = "../static/img/step/"+path
 	ids,_ := models.GetLastDish()
-	img := models.GetStepImg(ids)
-	img = img+"A"+path
-	models.InsertImgstep(ids,path)
+	Step,_ = models.CountStep(ids)
+	models.InsertImgstep(ids,path,Step)
+	imgs,_ := models.GetImg(ids)
+	fmt.Println("存入的图片长度",len(imgs))
+	rightposition := utils.GetRegisterImgPosition(imgs)
+	length := len(rightposition)
+	count := models.GetCountImg(ids)
+	fmt.Println("count",count,"length",length)
+	if count == length {
+		j := 0
+		for i :=1 ;i <= count ;i++{
+			models.UpdateRight(ids,rightposition[j],i)
+			j++
+		}
+
+	}
+	l.Unlock()
 	this.Data["ok"] = "ok"
 	this.ServeJSON()
 }

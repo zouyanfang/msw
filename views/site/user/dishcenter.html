@@ -11,7 +11,7 @@
                 <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
                     <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
                         <div>
-                            <img src="{{$v.DishImg}}" style="width: 100%;" value="123" class="img-responsive"/>
+                            <img src="{{$v.DishImg}}" style="width: 100%;height: 300px;" value="123" class="img-responsive"/>
                             <p class="col-sm-11 text-center">{{$v.DishName}}</p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         </textarea>
                     </div>
                 </div>
-                <button class="btn btn-info col-sm-offset-10" id="createdish">创建菜谱</button>
+                <button class="btn btn-info col-sm-offset-10" id="createdish" type="button">创建菜谱</button>
             </form>
 
             <div class="col-sm-12 hidden" id="dishdetail" style="margin-top: 20px;border-top: 1px solid gray;">
@@ -87,9 +87,10 @@
                         <input type="" name="" class="form-control">
                     </div>
                     <div class="col-sm-7">
-                        <button class="col-sm-6 btn btn-default pull-right" id="foodcommit">提交</button>
+                        <button class="col-sm-6 btn btn-default pull-right" id="foodcommit" type="button">提交</button>
                     </div>
                 </form>
+                <div id="step" class="hidden">
                 <h3 class="col-sm-12">步骤</h3>
                 <div class="col-sm-12" style="margin-bottom: 30px">
                      <div id="uploader" class="wu-example">
@@ -119,6 +120,7 @@
                             <button class="btn btn-default" id="plus">添加步骤</button>
                             <button id="ctlBtn" class="btn btn-default" >开始上传</button>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -212,9 +214,6 @@
 <script type="text/javascript">
     // 初始化Web Uploader
     var $btn =$("#ctlBtn");   //开始上传
-    $(document).ready(function(){
-        console.log("秀秀秀秀秀")
-    })
     // 初始化
     var uploader = WebUploader.create({
 
@@ -330,7 +329,6 @@
             dataType:"json",
             data:{"step":step,"describe":main,"dishid":dishid},
             success:function (result) {
-                console.log(result)
                 var s = uploader.upload();
             }
         })
@@ -392,18 +390,17 @@
     $("#img").change(function(){
         imgPreview()
     })
-
     $("#createdish").click(function(){
         console.log("12321312313")
         var formData = new FormData()
         if ($("#img").val() == ""){
             alert("没有选择图片")
-            return
+            return false
         }
         formData.append('img',$('#img')[0].files[0])
         if ($("#describe").val() == "" || $("#menuname").val() == ""){
             alert("请把剩余的空填写完毕")
-            return
+            return false
         }
         formData.append("dishname",$("#dishname").val())
         formData.append("describe",$("#describe").val())
@@ -422,7 +419,7 @@
                     $("#createdish").remove()
                     $("#foodcommit").attr("value",result.Id)
                     $("#ctlBtn").attr("value",result.Id)
-                    return
+                    return false
                 }
                 alert(result.Msg)
             }
@@ -456,11 +453,13 @@
             data:{"main":main,"second":second,"dishid":dish,"system":dishsystemt,"taste":taste},
             success:function(result){
                 if (result.Ret == 200){
-                    $("#foodcommit").attr("value",20)
+                    $("#foodcommit").remove()
+                    $("#step").removeClass('hidden')
                     return
                 }
                 alert(result.Msg)
             }
         })
     })
+
 </script>
