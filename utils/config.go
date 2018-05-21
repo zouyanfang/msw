@@ -7,7 +7,7 @@ const (
 	PAGESIZE4 = 4
 	PAFESIZE5 = 5
 	PAGESIZE6 = 6
-	PAFESIZE9 = 9
+	PAGESIZE9 = 9
 	ERRROWS   = "<QuerySeter> no row found"
 )
 

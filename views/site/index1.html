@@ -1,6 +1,6 @@
 <div class="container" id="menu" style="margin-top: 20px;">
     {{range $k,$v := .menu}}
-    <div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div>
+    <a href="menucenter/menudetail?menuid={{$v.Id}}"><div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div></a>
     <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
     <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
     <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>-->
@@ -8,17 +8,19 @@
 </div>
 
 <div class="container menudetail" style="margin-top: 20px;">
-    <p class="text-center lead" ><a href=""  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
+    <p class="text-center lead" ><a href="/menucenter/menucenter"  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
 </div>
 
 <div class="container" id="food" style="margin-top: 20px;">
     <!-- {{range $k,$v := .dishShow}} -->
-    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-        <div>
-            <img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"/>
-            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+    <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
+        <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;" >
+            <div>
+                <img src="{{$v.DishImg}}" style="width: 100%;" value="{{$v.Id}}" class="img-responsive"/>
+                <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+            </div>
         </div>
-    </div>
+    </a>
     <!-- {{end}} -->
 </div>
 <div class="container-fluid menudetail2">
@@ -48,3 +50,12 @@
         </ul>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        init()
+    })
+    function init(){
+        console.log("1.    "+"&#x6211")
+    }
+</script>

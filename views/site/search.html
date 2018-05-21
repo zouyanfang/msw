@@ -6,23 +6,45 @@
 	</div>
 	<!-- 不同页面显示的区域 -->
 	<div class="container" style="margin-bottom: 20px;">
-<ul class="media-list" style="margin-bottom: 20px;">
-  <li class="media">
-    <div class="media-left">
-      <a href="#">
-        <img class="media-object" src="1.jpg" alt="..." style="height: 100px;width: 200px;">
-      </a>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Media heading</h4>
-      <h3 style="margin-bottom: 20px;">描述</h3>
-      <h4 class="col-sm-2" style="padding-left: 0px;">作者：</h4>
-	  <a src='' style="cursor: pointer"><span class="fa fa-hand-o-right"></span>去瞧一瞧</a>
-</div>
-  		</li>
+	{{if  .status }}
+        {{range $i,$v := .dish}}
+		<ul class="media-list" style="margin-bottom: 20px;">
+		  <li class="media">
+			<div class="media-left">
+			  <a href="#">
+				<img class="media-object" src="{{$v.DishImg}}" alt="..." style="height: 100px;width: 200px;">
+			  </a>
+			</div>
+			<div class="media-body">
+			  <h4 class="media-heading">{{$v.DishName}}</h4>
+			  <h3 style="margin-bottom: 20px;">{{$v.DishDescribe}}</h3>
+
+			  <a src='' style="cursor: pointer" href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}"><span class="fa fa-hand-o-right"></span>去瞧一瞧</a>
+			</div>
+		  </li>
 		</ul>
-		<button class="btn btn-info col-sm-4 col-sm-offset-4">更多</button>
-		<div class="alert alert-danger col-sm-12" role="alert">		
-			<strong>o(╯□╰)o</strong> 没有该搜索条件的菜单或菜谱
-		</div>
+		{{end}}
+
+		{{range $i,$v := .menu}}
+            <ul class="media-list" style="margin-bottom: 20px;">
+                <li class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{{$v.MenuImg}}" alt="..." style="height: 100px;width: 200px;">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{$v.MenuName}}</h4>
+                        <h3 style="margin-bottom: 20px;">{{$v.MenuDescribe}}</h3>
+
+                        <a src='' style="cursor: pointer" href="/menucenter/menudetail?menuid={{$v.Id}}"><span class="fa fa-hand-o-right"></span>去瞧一瞧</a>
+                    </div>
+                </li>
+            </ul>
+		{{end}}
+	{{else}}
+	<div class="alert alert-danger col-sm-12" role="alert">
+		<strong>o(╯□╰)o</strong> 没有该搜索条件的菜单或菜谱
+	</div>
+	{{end}}
 	</div>

@@ -7,26 +7,16 @@
     <div class="main">
         <div class="col-sm-12 t" style="margin-top: 20px;" id="mydish" >
             <div class="container" id="food" style="margin-top: 20px;">
-            {{/*<!-- {{range $k,$v := .dishShow}} -->*/}}
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
+             {{range $k,$v := .resp.Dish}}
+                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
+                    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                        <div>
+                            <img src="{{$v.DishImg}}" style="width: 100%;" value="123" class="img-responsive"/>
+                            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
-                    </div>
-                </div>
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
-                    </div>
-                </div>
-                {{/*<!-- {{end}} -->*/}}
+                </a>
+            {{end}}
             </div>
         </div>
         <div class="col-sm-12 hidden t"  style="margin-top: 20px;" id="releasedish">
@@ -35,44 +25,55 @@
                     <label>
                         创建菜谱
                     </label>
-                    <input type="text" name="" class="form-control">
+                    <input type="text" name="" class="form-control" id="dishname">
                 </div>
                 <div class="col-sm-8" style="margin-bottom: 20px;">
                     <img src=""  id="showimg" style="height: 100px;width: 100px;" alt="菜单图片">
                 </div>
                 <div class="form-group col-sm-4">
-                    <label for="dishimg" class="control-label" id="addimg">MenuImg</label>
-                    <input type="file" id="dishimg" class="hidden">
+                    <label for="img" class="control-label" id="addimg">CheckImg</label>
+                    <input type="file" id="img" class="hidden">
                 </div>
                 <div class="form-group">
                     <div>
-                        <textarea class="form-control" placeholder="添加菜谱描述">
+                        <textarea class="form-control" placeholder="添加菜谱描述" id="describe">
                         </textarea>
                     </div>
                 </div>
-                <button class="btn btn-info col-sm-offset-10">创建菜谱</button>
+                <button class="btn btn-info col-sm-offset-10" id="createdish">创建菜谱</button>
             </form>
 
-            <div class="col-sm-12" id="dishdetail" style="margin-top: 20px;border-top: 1px solid gray;">
+            <div class="col-sm-12 hidden" id="dishdetail" style="margin-top: 20px;border-top: 1px solid gray;">
                 <h3>菜谱详情</h3>
                 <form class="col-sm-6">
                     <div class="form-group col-sm-7">
                         <label>菜系</label>
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <select class="form-control" id="dishsystem">
+                            <option>闽菜</option>
+                            <option>徽菜</option>
+                            <option>川菜</option>
+                            <option>鲁菜</option>
+                            <option>粤菜</option>
+                            <option>湘菜</option>
+                            <option>苏菜</option>
+                            <option>浙菜</option>
+                            <option>法国</option>
+                            <option>韩国</option>
+                            <option>意大利</option>
+                            <option>西班牙</option>
                         </select>
                     </div>
                     <div class="form-group col-sm-7">
                         <label>口味</label>
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <select class="form-control" id="taste">
+                            <option>辣</option>
+                            <option>咖喱</option>
+                            <option>糖醋</option>
+                            <option>酸甜</option>
+                            <option>香甜</option>
+                            <option>五香</option>
+                            <option>香鲜</option>
+                            <option>清淡</option>
                         </select>
                     </div>
                     <div class="form-group col-sm-7" id="mainmaterial" >
@@ -86,7 +87,7 @@
                         <input type="" name="" class="form-control">
                     </div>
                     <div class="col-sm-7">
-                        <button class="col-sm-6 btn btn-default pull-right">提交</button>
+                        <button class="col-sm-6 btn btn-default pull-right" id="foodcommit">提交</button>
                     </div>
                 </form>
                 <h3 class="col-sm-12">步骤</h3>
@@ -116,7 +117,7 @@
                         <br>
                         <div class="col-sm-1">
                             <button class="btn btn-default" id="plus">添加步骤</button>
-                            <button id="ctlBtn" class="btn btn-default">开始上传</button>
+                            <button id="ctlBtn" class="btn btn-default" >开始上传</button>
                         </div>
                     </div>
                 </div>
@@ -124,26 +125,16 @@
         </div>
         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="collectdish">
             <div class="container" id="food" style="margin-top: 20px;">
-            {{/*<!-- {{range $k,$v := .dishShow}} -->*/}}
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
+            {{range $k,$v := .resp.CollectDish}}
+                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
+                    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                        <div>
+                            <img src="{{$v.DishImg}}" style="width: 100%;" value="123" class="img-responsive"/>
+                            <p class="col-sm-11 text-center">{{$v.DishName}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
-                    </div>
-                </div>
-                <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
-                    <div>
-                        <img src="../../static/img/dish_img/1.jpg" style="width: 100%;" value="123" class="img-responsive"/>
-                        <p class="col-sm-11 text-center">123</p>
-                    </div>
-                </div>
-            {{/*<!-- {{end}} -->*/}}
+                </a>
+            {{end}}
             </div>
         </div>
     </div>
@@ -231,7 +222,7 @@
         auto: false,
 
         // 文件接收服务端。
-        server: './getimg',
+        server: '/user/getstepimg',
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -308,14 +299,43 @@
         $error.text('上传失败');
     });
 
+    uploader.on( 'uploadBeforeSend', function( block, data ) {
+        // block为分块数据。
+
+        // file为分块对应的file对象。
+        var file = block.file;
+
+
+        // 修改data可以控制发送哪些携带数据。
+        data.uid = 123;
+    });
+
     // 完成上传完了，成功或者失败，先删除进度条。
     uploader.on( 'uploadComplete', function( file ) {
         $( '#'+file.id ).find('.progress').remove();
     });
     $btn.on( 'click', function() {
         console.log("上传...");
-        var s = uploader.upload();
-        console.log(s)
+        var dishid = $("#ctlBtn").attr("value")
+        var text = $("#mycontent textarea")
+        var main = ""
+        var step = text.length
+        for(var i = 0;i<text.length;i++){
+            main += $(text[i]).val()+"/"
+        }
+        console.log(main)
+        $.ajax({
+            url:"/user/updatedishstep",
+            type:"post",
+            dataType:"json",
+            data:{"step":step,"describe":main,"dishid":dishid},
+            success:function (result) {
+                console.log(result)
+                var s = uploader.upload();
+            }
+        })
+
+
         console.log("上传成功");
     });
     
@@ -334,5 +354,113 @@
                                     </div>
                                 </div>`)
     });
+</script>
 
+<script type="text/javascript">
+    $("#img").change(function(){
+        imgPreview()
+        console.log("123123123edflasdjfliJWN")
+    })
+
+    function imgPreview(){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+
+        //获取文件
+        var file = $("#img")[0].files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        reader.readAsDataURL(file)
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementById("showimg");
+            //图片路径设置为读取的图片
+            img.src = e.target.result;
+            console.log(img)
+        };
+    }
+
+    $("#img").change(function(){
+        imgPreview()
+    })
+
+    $("#createdish").click(function(){
+        console.log("12321312313")
+        var formData = new FormData()
+        if ($("#img").val() == ""){
+            alert("没有选择图片")
+            return
+        }
+        formData.append('img',$('#img')[0].files[0])
+        if ($("#describe").val() == "" || $("#menuname").val() == ""){
+            alert("请把剩余的空填写完毕")
+            return
+        }
+        formData.append("dishname",$("#dishname").val())
+        formData.append("describe",$("#describe").val())
+        $.ajax({
+            url: '/user/createdish',
+            type: 'post',
+            dataType: 'json',
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function(result){
+                console.log(result)
+                if (result.Ret == 200){
+                    alert("创建成功")
+                    $("#dishdetail").removeClass("hidden")
+                    $("#createdish").remove()
+                    $("#foodcommit").attr("value",result.Id)
+                    $("#ctlBtn").attr("value",result.Id)
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
+    });
+
+    $("#foodcommit").click(function(){
+        var dish = $("#foodcommit").attr("value")
+        var dishsystemt = $("#dishsystem").val()
+        var taste = $("#taste").val()
+        var sinpu = $("#mainmaterial input")
+        var spinpu = $("#secondmaterial input")
+        var main = ""
+        var second = ""
+        for (var i = 0;i<sinpu.length;i++){
+            var val = $(sinpu[i]).val()
+            if (val != ""){
+                main +=val+"/"
+            }
+        }
+        for (var i = 0;i<spinpu.length;i++){
+            var val = $(spinpu[i]).val()
+            if (val != ""){
+                second +=val+"/"
+            }
+        }
+        $.ajax({
+            url:"/user/updatedish",
+            type:"post",
+            dataType:"json",
+            data:{"main":main,"second":second,"dishid":dish,"system":dishsystemt,"taste":taste},
+            success:function(result){
+                if (result.Ret == 200){
+                    $("#foodcommit").attr("value",20)
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
+    })
 </script>

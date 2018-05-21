@@ -4,6 +4,7 @@ import (
 	"msw/services"
 	"msw/utils"
 	"msw/models"
+	"fmt"
 )
 
 //菜谱大全
@@ -14,14 +15,16 @@ type DishController struct {
 //获取菜谱大全列表
 func (this *DishController) GetAllDishList()  {
 	page := 1
-	allDish := services.GetAllDishList(page,utils.PAFESIZE9,"ORDER BY d.popular_count DESC",nil)
-	this.Data["allDish"] = allDish.Object
+	allDish := services.GetAllDishList(page,utils.PAGESIZE9,"ORDER BY d.popular_count DESC",nil)
+	this.Data["allDish"] = allDish
 	this.Data["type"] = 2
+	this.Data["page"] = allDish.Page
 	this.IsNeddTemplate()
 	this.TplName = "site/food.html"
 }
 
 func (this *DishController) GetConditionDishList()  {
+
 	var resp models.DishResp
 	resp.Ret = 403
 	defer func() {
@@ -30,7 +33,7 @@ func (this *DishController) GetConditionDishList()  {
 	}()
 	condition := ""
 	paras := []interface{}{}
-	page,_:= this.GetInt("page",0)
+	page,_:= this.GetInt("page",1)
 	tasty:= this.GetString("tasty")
 	if tasty != "" {
 		condition += " AND d.tasty = ?"
@@ -41,8 +44,8 @@ func (this *DishController) GetConditionDishList()  {
 		condition += " AND d.dish_system = ?"
 		paras = append(paras,area)
 	}
-	resp = services.GetAllDishList(page,utils.PAFESIZE9,condition,paras)
-
+	fmt.Println(area,tasty)
+	resp = services.GetAllDishList(page,utils.PAGESIZE9,condition,paras)
 }
 
 //菜谱详情
@@ -60,6 +63,17 @@ func (this *DishController)GetDishDetail(){
 		conditon += " AND "
 		paras = append(paras,dishId)
 	}
+	if this.User == nil {
+		this.Data["status"] = 0
+	}else {
+		s ,_:= models.FindUserCollection(dishId,this.User.Id)
+		if s != nil {
+			this.Data["status"] = s.Status
+		}else {
+			this.Data["status"] = 0
+		}
+
+	}
 	dishInfoResp := services.GetDishInfo(uid,dishId)
 	dishCommnet := services.GetDishComment(page,utils.PAFESIZE5,dishId)
 	this.Data["dishInfo"] = dishInfoResp.DishDetail
@@ -75,6 +89,8 @@ func (this *DishController)GetDishDetail(){
 	this.TplName = "site/foodetail.html"
 }
 
+
+//获取更多评论
 func (this *DishController)GetTalk(){
 	var resp models.DishResp
 	resp.Ret = 403

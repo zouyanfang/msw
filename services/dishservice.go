@@ -30,6 +30,7 @@ func GetDishList(page ,pageSize int,condition string ,paras []string)(resp model
 //获取菜谱大全
 func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (resp models.DishResp)  {
 	resp.Ret = 403
+	fmt.Println(page)
 	allDish,err := models.GetAllDishList(utils.StartIndex(page,pageSize),pageSize,condition,paras)
 	if err != nil{
 		if err.Error() != utils.ERRROWS {
@@ -48,9 +49,24 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 	pages := utils.PageCount(pageSize,count)
 	if utils.IsHaveNext(page,pages) {
 		resp.Page = page
+
+	}else if page > pages{
+		resp.Page = 1
 	}else {
-		resp.Page = 0
+		resp.Page = page
 	}
+	if page >= pages {
+		resp.Next = false
+	}else {
+		resp.Next = true
+	}
+	fmt.Println("当前页",page)
+	if page == 1 {
+		resp.Pref = false
+	}else {
+		resp.Pref = true
+	}
+
 	resp.Ret = 200
 	resp.Object = allDish
 	return
@@ -58,17 +74,19 @@ func GetAllDishList(page,pageSize int,condition string,paras []interface{}) (res
 
 //获取菜谱信息
 func GetDishInfo(uid,dishId int) (dishDetail models.DishDetailResp) {
+	models.AddPopular(dishId)
 	dishInfo,err := models.GetDishInfo(uid,dishId)
-	stepInfo,err := models.GetDishStep(uid,dishId)
 	mainMaterial := strings.Split(dishInfo.MainMaterial,"/")
 	secondMaterial := strings.Split(dishInfo.SecondMaterial,"/")
+	stepinfo ,err := models.GetStepByDish(dishId)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	dishDetail.DishDetail = dishInfo
-	dishDetail.StepDetail = stepInfo
+	dishDetail.StepDetail = stepinfo
 	dishDetail.MainMaterial = mainMaterial
 	dishDetail.SecondMaterial = secondMaterial
+
 	return
 }
 
@@ -102,3 +120,14 @@ func GetDishComment(page,pageSize ,dishId int) (resp models.DishResp)  {
 	return
 }
 
+
+func CreateNewDish(uid int,dishname string,dishimg string,describe string)(resp models.CreateDishResp){
+	err := models.CreateDish(uid,dishname,dishimg,describe)
+	if err != nil {
+		resp.Msg = err.Error()
+	}
+	id,_ := models.GetLastDish()
+	resp.Id = id
+	resp.Ret = 200
+	return
+}
