@@ -329,7 +329,9 @@
             dataType:"json",
             data:{"step":step,"describe":main,"dishid":dishid},
             success:function (result) {
+                $btn.remove()
                 var s = uploader.upload();
+                location.reload()
             }
         })
 

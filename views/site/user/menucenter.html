@@ -153,6 +153,9 @@
     })
 
     $(".deletemenu").click(function () {
+        if (!confirm("确定要删除该菜单")){
+            return
+        }
         var id = $(this).attr("value")
         var o = $(this)
         $.ajax({
