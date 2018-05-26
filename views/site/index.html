@@ -252,29 +252,29 @@
             <div class="container">
                 <nav class="navbar navbar-default">
                     <div class="navbar-header w3l_logo">
-                        <h1><a href="index.html">Memory taste<span>delicious memory happiness</span></a></h1>
+                        <h1><a href="index.html">The source of taste<span>delicious memory happiness</span></a></h1>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;">
                         {{if eq .type 1}}
-                            <li><a href="/" class="active">首页</a></li>
+                            <li><a href="/" class="active" style="font-size: 25px">首页</a></li>
                         {{else }}
-                            <li><a href="/" class="">首页</a></li>
+                            <li><a href="/" class="" style="font-size: 25px">首页</a></li>
                         {{end}}
                         {{ if eq .type 2}}
-                            <li><a href="/dish/getalldishlist" class="active">菜谱中心</a></li>
+                            <li><a href="/dish/getalldishlist" class="active" style="font-size: 25px">菜谱中心</a></li>
                         {{else}}
-                            <li><a href="/dish/getalldishlist" >菜谱中心</a></li>
+                            <li><a href="/dish/getalldishlist" style="font-size: 25px">菜谱中心</a></li>
                         {{end}}
                         {{if eq .type 3}}
-                            <li><a href="/menucenter/menucenter" class="active">菜单中心</a></li>
+                            <li><a href="/menucenter/menucenter" class="active" style="font-size: 25px">菜单中心</a></li>
                         {{else}}
-                            <li><a href="/menucenter/menucenter">菜单中心</a></li>
+                            <li><a href="/menucenter/menucenter" style="font-size: 25px">菜单中心</a></li>
                         {{end}}
                         {{if eq .type 4}}
-                            <li><a href="/index/message" class="active">留言版</a></li>
+                            <li><a href="/index/message" class="active" style="font-size: 25px">留言版</a></li>
                         {{else}}
-                            <li><a href="/index/message">留言版</a></li>
+                            <li><a href="/index/message" style="font-size: 25px">留言版</a></li>
                         {{end}}
                             <!-- 管理中心 当用户是管理人的时候进来显示-->
                             <!-- <li><a href="contact.html">后台管理</a></li> -->
@@ -286,10 +286,10 @@
     </div>
     <div class="banner-text">
         <div class="container">
-            <h2>Delicious food from the <br> <span>Best Chefs For you.</span></h2>
+            <h2>Delicious food for you <br> <span>Memory taste</span></h2>
             <div class="agileits_search">
                 <form action="/index/search" method="get" style="border: 0px;">
-                    <input name="Search" type="text" placeholder="Enter Your Area Name" required="">
+                    <input name="Search" type="text" placeholder="请输入您要查询的菜单或菜谱名..." required="">
                     <input type="submit" value="Search">
                 </form>
             </div>
@@ -304,14 +304,19 @@
     <!-- main end -->
 </div>
 
-<div class="container-fluid" style="background-color:#59793a ">
-    <div class="jumbotron" style="background-color:#59793a;color: white; ">
-        <p class="text-center" >本站所有信息均由互联网下载得来，相关链接已注明来源，版权归原创者所有。</p>
-        <p class="text-center">如果无意中侵犯了您的权益，请通知我（....@163.com)，我们会及时做相应处理，谢谢合作。</p>
+<div class="container-fluid" style="background-color:#4b6e2d ">
+    <div class="" style="background-color:#4b6e2d;color: white; height: 100px;margin-top: 10px;">
+        <h3 class="text-center" style="color: gray" >本站所有信息均由互联网下载得来，相关链接已注明来源，版权归原创者所有。</h3>
+        <h3 class="text-center" style="color: gray">如果无意中侵犯了您的权益，请通知我（....@163.com)，我们会及时做相应处理，谢谢合作。</h3>
+        <div class="col-sm-8 col-sm-offset-2" style="margin-top: 15px;margin-bottom: 15px;">
+            <p class="col-sm-2">友情链接</p>
+            <a href="https://www.meishichina.com/" class="col-sm-2">天下美食</a>
+            <a href="http://www.meishij.net/" class="col-sm-2">美食杰</a>
+        </div>
     </div>
 
 </div>
-<div class="container-fluid" style="background-color: #4b6e2d">
+<div class="container-fluid" style="background-color:   #2e520b">
     <p class="text-center lead" style="color: white;">Copyright &copy;ZYF ALL Rights Reserved</p>
 </div>
 

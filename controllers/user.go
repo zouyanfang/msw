@@ -397,3 +397,30 @@ func (this *UserController)GetStepImg(){
 	this.Data["ok"] = "ok"
 	this.ServeJSON()
 }
+
+
+func (this *UserController)Delete(){
+	var resp models.BaseMsgResp
+	defer func(){
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	id,_ := this.GetInt("id")
+	err := models.DeleteDish(id)
+	if err != nil {
+		resp.Msg = err.Error()
+		return
+	}
+	resp.Ret = 200
+}
+
+
+func (this *UserController)CancelDish(){
+	var resp models.BaseMsgResp
+	defer func() {
+		this.Data["json"] = resp
+		this.ServeJSON()
+	}()
+	id,_ := this.GetInt("dishid")
+	resp = services.UserDishCollect(id,this.User.Id,0)
+}

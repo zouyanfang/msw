@@ -1,14 +1,17 @@
+<div class="container" style="margin-top: 20px;color: #ff5722">
+    <h2  class="text-left">最新菜单</h2>
+</div>
 <div class="container" id="menu" style="margin-top: 20px;">
     {{range $k,$v := .menu}}
-    <a href="menucenter/menudetail?menuid={{$v.Id}}"><div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div></a>
+    <a href="menucenter/menudetail?menuid={{$v.Id}}"><div class="col-sm-3 img"><img src="{{$v.MenuImg}}" value="{{$v.Id}}" height="170px;"><p class="text-center col-sm-12">{{$v.MenuName}}</p></div></a>
     <!--<div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
     <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>
     <div class="col-sm-3 img"><img src="static/img/2.jpg" ></div>-->
     {{end}}
 </div>
 
-<div class="container menudetail" style="margin-top: 20px;">
-    <p class="text-center lead" ><a href="/menucenter/menucenter"  style="color: red"><strong>[人气]菜单介绍</strong></a></p>
+<div class="container" style="margin-top: 20px;color: #ff5722">
+    <h2  class="text-left">人气菜谱</h2>
 </div>
 
 <div class="container" id="food" style="margin-top: 20px;">
@@ -35,8 +38,7 @@
         <ul class="list-unstyled" id="news">
             {{range $k,$v := .message}}
             <li>
-                <p class="text-left">{{$v.CreateTime}}<small class="label label-danger">New</small><small style="margin-left: 10%;"></small>{{$v.Content}}</p>
-                <p class="text-center"><small style="margin-right: 15%;"></small><small class="laber laber-defalut" style="background-color: #85961c;color: white;">作者：{{$v.Name}}</small></p>
+                <p class="text-left">{{$v.CreateTime}}<small class="label label-danger">New</small><small style="margin-left: 10%;"></small><p style="margin-left: 10px;">{{$v.Content}}</p></p>
             </li>
              {{end}}
             <!--<li>

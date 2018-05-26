@@ -42,15 +42,14 @@ func UserDishCollect(dishid,uid ,status int)(resp models.BaseMsgResp){
 			resp.Msg = err.Error()
 			return
 		}
-		resp.Ret = 200
-		return
+	}else{
+		err := models.UpdateCollect(o,dishid,uid,status)
+		if err != nil {
+			resp.Msg = err.Error()
+			return
+		}
 	}
-	err := models.UpdateCollect(o,dishid,uid,status)
-	if err != nil {
-		resp.Msg = err.Error()
-		return
-	}
-	err = models.UpdateDishNum(o,dishid,status)
+	err := models.UpdateDishNum(o,dishid,status)
 	if err != nil {
 		resp.Msg = "更新菜谱收藏数量失败"
 		return

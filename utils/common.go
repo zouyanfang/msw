@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 func StartIndex(page,pageSize int)(pageIndex int){
@@ -97,3 +99,9 @@ func SortNumber(a []int)([]int){
 	return a
 }
 
+//随机默认图片
+func RandUserImg()(int){
+	 rand.Seed(time.Now().Unix())
+	 n := rand.Intn(5)
+	 return n
+}

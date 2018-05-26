@@ -38,13 +38,14 @@ func Register(name string) (count int, err error) {
 }
 
 //添加用户注册信息
-func AddUser(account, pwd string) (err error) {
+func AddUser(account, pwd,userimg string) (err error) {
 	o := orm.NewOrm()
-	sql := `INSERT INTO users (account,pwd,register_date)
-			VALUES(?,?,NOW())`
-	_, err = o.Raw(sql, account, pwd).Exec()
+	sql := `INSERT INTO users (account,pwd,register_date,user_img)
+			VALUES(?,?,NOW(),?)`
+	_, err = o.Raw(sql, account, pwd,userimg).Exec()
 	return
 }
+
 
 //初始化用户收藏表
 func InsertUserCollection(o orm.Ormer,dishid int, uid int) (err error) {

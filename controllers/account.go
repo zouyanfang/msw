@@ -3,6 +3,8 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"msw/models"
+	"msw/utils"
+	"strconv"
 )
 
 type AccountController struct {
@@ -68,7 +70,9 @@ func (c *AccountController) Register()  {
 		return
 	}
 	//添加用户注册信息
-	err := models.AddUser(account,password)
+	number := utils.RandUserImg()
+	defaultImg := "../static/img/user_img/"+strconv.Itoa(number)+".jpg"
+	err := models.AddUser(account,password,defaultImg)
 	if err != nil {
 		resultMap["msg"] = "添加注册用户失败"
 		return

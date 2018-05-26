@@ -204,3 +204,39 @@ func UpdateRight(dishid int,img string,step int)(){
 	return
 }
 
+func DeleteDish(dishid int)(err error){
+	o := orm.NewOrm()
+	defer func() {
+		if err != nil {
+			o.Rollback()
+			return
+		}
+		o.Commit()
+	}()
+	sql := `DELETE FROM dish WHERE id = ?`
+	_,err = o.Raw(sql,dishid).Exec()
+	if err != nil {
+		return
+	}
+	sql = `DELETE FROM menu_dish WHERE dish_id = ?`
+	_,err = o.Raw(sql,dishid).Exec()
+	if err != nil {
+		return
+	}
+	sql = `DELETE FROM dish_step WHERE dish_id = ?`
+	_,err = o.Raw(sql,dishid).Exec()
+	if err != nil {
+		return
+	}
+	sql = `DELETE FROM user_collection WHERE dish_id = ?`
+	_,err = o.Raw(sql,dishid).Exec()
+	if err != nil {
+		return
+	}
+	sql = `DELETE FROM dish_comment WHERE dish_id = ?`
+	_,err = o.Raw(sql,dishid).Exec()
+	if err != nil {
+		return
+	}
+	return
+}

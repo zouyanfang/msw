@@ -8,14 +8,18 @@
         <div class="col-sm-12 t" style="margin-top: 20px;" id="mydish" >
             <div class="container" id="food" style="margin-top: 20px;">
              {{range $k,$v := .resp.Dish}}
-                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
-                    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+             <div class="col-sm-3">
+                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" class="col-sm-12" style="margin: 0px;padding: 0px;">
+                    <div class="col-sm-12" style="margin-bottom: 20px;padding-left: 0px;margin: 0px;padding: 0px;">
                         <div>
                             <img src="{{$v.DishImg}}" style="width: 100%;height: 300px;" value="123" class="img-responsive"/>
                             <p class="col-sm-11 text-center">{{$v.DishName}}</p>
                         </div>
                     </div>
                 </a>
+                 <br>
+                 <button class="col-sm-offset-5 btn btn-warning pull-right deletes" type="button" value="{{$v.Id}}" style="margin-top: 20px;">Delete</button>
+             </div>
             {{end}}
             </div>
         </div>
@@ -128,14 +132,17 @@
         <div class="col-sm-12 hidden t" style="margin-top: 20px;" id="collectdish">
             <div class="container" id="food" style="margin-top: 20px;">
             {{range $k,$v := .resp.CollectDish}}
-                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}">
-                    <div class="col-sm-4" style="margin-bottom: 20px;padding-left: 0px;">
+                <div class="col-sm-3">
+                <a href="/dish/getdishdetail?uid={{$v.Uid}}&dishId={{$v.Id}}" >
+                    <div class="col-sm-12" style="margin-bottom: 20px;padding: 0px;">
                         <div>
                             <img src="{{$v.DishImg}}" style="width: 100%;" value="123" class="img-responsive"/>
                             <p class="col-sm-11 text-center">{{$v.DishName}}</p>
                         </div>
                     </div>
                 </a>
+                    <button class="col-sm-4 btn btn-warning pull-right cancel" value="{{$v.Id}}">取消消息</button>
+                </div>
             {{end}}
             </div>
         </div>
@@ -464,4 +471,48 @@
         })
     })
 
+    $(".deletes").click(function(){
+        if(!confirm("确定要删除该菜单")){
+            return
+        }
+        var id = $(this).attr("value")
+        var t = $(this)
+        $.ajax({
+            url :"/user/delete",
+            type:"get",
+            dataType:"json",
+            data:{"id":id},
+            success:function (result) {
+                console.log(result)
+                if (result.Ret == 200){
+                    t.parent().parent().remove()
+                    alert("删除成功！")
+                    return false
+                }
+                alert(result.Msg)
+            }
+        })
+    })
+
+    $(".cancel").click(function(){
+        if(!confirm("是否取消收藏")){
+            return
+        }
+        var id = $(this).attr("value")
+        var i = $(this)
+        $.ajax({
+            url :"/user/canceldish",
+            type:"get",
+            dataType:"json",
+            data:{"dishid":id},
+            success:function(result){
+                if(result.Ret == 200){
+                    i.parent().parent().remove()
+                    alert("取消成功")
+                    return
+                }
+                alert(result.Msg)
+            }
+        })
+    })
 </script>
