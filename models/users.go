@@ -30,10 +30,10 @@ func Login(account, pwd string) (user *User, err error) {
 	return
 }
 
-func Register(name string) (count int, err error) {
+func Register(account string) (count int, err error) {
 	o := orm.NewOrm()
-	sql := `SELECT COUNT(1) FROM users WHERE name = ?`
-	err = o.Raw(sql, name).QueryRow(&count)
+	sql := `SELECT COUNT(1) FROM users WHERE account = ?`
+	err = o.Raw(sql,account).QueryRow(&count)
 	return
 }
 
