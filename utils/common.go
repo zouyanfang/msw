@@ -40,7 +40,7 @@ func IsHaveNext(page,pages int)(bool){
 func SaveImg(s multipart.File,f *multipart.FileHeader,id int,path string)(name string){
 	mode := strings.Split(f.Filename,".")
 	newsname := strconv.Itoa(id)+"."+mode[len(mode)-1]
-	os.Remove("static/img/"+path+newsname)
+	/*os.Remove("static/img/"+path+newsname)*/
 	f1,err := os.Create("static/img/"+path+newsname)
 	if err != nil {
 		return

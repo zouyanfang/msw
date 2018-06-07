@@ -294,6 +294,10 @@ func (this *UserController)ModifyBaseMsg(){
 	resp = services.ModifyUserByUid(this.User.Id,condition,paras)
 }
 
+
+
+
+
 func (this *UserController)CreateDish(){
 	var resp models.CreateDishResp
 	resp.Ret = 403
@@ -332,6 +336,8 @@ func (this *UserController)UpdateDish(){
 	dish,_:=this.GetInt("dishid")
 	resp = services.UpdateDishDetail(dish,taste,system,main,second)
 }
+
+
 func (this *UserController)UpdateDishStep(){
 	var resp models.BaseMsgResp
 	defer func() {
@@ -393,6 +399,7 @@ func (this *UserController)GetStepImg(){
 		}
 
 	}
+	fmt.Println("2331231231231231231231231231")
 	l.Unlock()
 	this.Data["ok"] = "ok"
 	this.ServeJSON()

@@ -337,12 +337,11 @@
             data:{"step":step,"describe":main,"dishid":dishid},
             success:function (result) {
                 $btn.remove()
-                var s = uploader.upload();
-                location.reload()
+                uploader.upload();
             }
         })
 
-
+        setTimeout(function(){location.reload()},6000);
         console.log("上传成功");
     });
     
@@ -485,7 +484,7 @@
             success:function (result) {
                 console.log(result)
                 if (result.Ret == 200){
-                    t.parent().parent().remove()
+                    t.parent().remove()
                     alert("删除成功！")
                     return false
                 }

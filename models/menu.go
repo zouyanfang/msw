@@ -60,6 +60,7 @@ func AddToUserMenu(dish_id int,menu_id int)(err error){
 	return
 }
 
+
 //新建菜单
 func InsertMenu(uid int,menuname string,menuimg string,describe string)(err error){
 	sql := `INSERT INTO menu (uid,menu_name,menu_img,menu_describe,create_date) VALUES (?,?,?,?,NOW())`
