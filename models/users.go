@@ -146,7 +146,7 @@ func GetMenuCountByUid(uid int)(count int){
 }
 
 func ModifyUserBaseMsg(uid int,condition string,paras interface{})(err error){
-	sql := `UPDATE users `
+	sql := `UPDATE users SET `
 	if condition != ""{
 		sql += condition
 	}

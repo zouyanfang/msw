@@ -264,7 +264,7 @@ func (this *UserController)ModifyBaseMsg(){
 	condition := ""
 	paras := []interface{}{}
 	if name:=this.GetString("name"); name != ""{
-		condition = " SET name = ? "
+		condition = " name = ? ,"
 		paras = append(paras,name)
 	}
 	if status,_ :=this.GetInt("status");status == 1{
@@ -276,7 +276,7 @@ func (this *UserController)ModifyBaseMsg(){
 		id := int(time.Now().Unix())
 		path := utils.SaveImg(s,f,id,"user_img")
 		path = "../static/img/user_img"+path
-		condition += " SET user_img = ? "
+		condition += "  user_img = ?, "
 		paras = append(paras,path)
 	}
 	oldpwd := this.GetString("old")
@@ -287,7 +287,7 @@ func (this *UserController)ModifyBaseMsg(){
 		}
 		pwd := this.GetString("pwd")
 		if pwd != ""{
-			condition += " SET pwd = ? "
+			condition += " pwd = ? "
 			paras = append(paras,pwd)
 		}
 	}
