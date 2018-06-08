@@ -3,9 +3,9 @@ jQuery(function($){
     $.supersized({
 
         // 功能
-        slide_interval     : 3000,    // 转换之间的长度
+        slide_interval     : 1000,    // 转换之间的长度
         transition         : 1,    // 0 - 无，1 - 淡入淡出，2 - 滑动顶，3 - 滑动向右，4 - 滑底，5 - 滑块向左，6 - 旋转木马右键，7 - 左旋转木马
-        transition_speed   : 5000,    // 转型速度
+        transition_speed   : 3000,    // 转型速度
         performance        : 1,    // 0 - 正常，1 - 混合速度/质量，2 - 更优的图像质量，三优的转换速度//（仅适用于火狐/ IE浏览器，而不是Webkit的）
 
         // 大小和位置
